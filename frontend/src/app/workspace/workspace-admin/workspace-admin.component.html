@@ -1,15 +1,15 @@
-<section class="workspace-view">
+<section class="workspace-view" data-testid="workspace-admin-page">
   <div class="eyebrow">Admin Permission</div>
   <h1>Membership and invitation controls</h1>
-  <mat-card *ngIf="data">
-    <p>{{ data.message }}</p>
+  <mat-card *ngIf="data" data-testid="workspace-admin-card">
+    <p data-testid="workspace-admin-message">{{ data.message }}</p>
     <h2>Allowed actions</h2>
-    <div class="chip-row">
-      <span class="chip" *ngFor="let action of data.actions">{{ action }}</span>
+    <div class="chip-row" data-testid="workspace-admin-actions">
+      <span class="chip" *ngFor="let action of data.actions" [attr.data-testid]="'workspace-admin-action-' + action">{{ action }}</span>
     </div>
 
     <h2>Invitations</h2>
-    <ul>
+    <ul data-testid="workspace-admin-invitations">
       <li *ngFor="let invitation of data.invitations">
         {{ invitation.email }} - {{ invitation.status }}
       </li>

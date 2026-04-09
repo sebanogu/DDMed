@@ -1,10 +1,10 @@
-<section class="workspace-view">
+<section class="workspace-view" data-testid="workspace-support-page">
   <div class="eyebrow">Support Permission</div>
   <h1>Support workspace</h1>
-  <mat-card *ngIf="data">
-    <p>{{ data.message }}</p>
-    <div class="chip-row">
-      <span class="chip" *ngFor="let tool of data.tools">{{ tool }}</span>
+  <mat-card *ngIf="data" data-testid="workspace-support-card">
+    <p data-testid="workspace-support-message">{{ data.message }}</p>
+    <div class="chip-row" data-testid="workspace-support-tools">
+      <span class="chip" *ngFor="let tool of data.tools" [attr.data-testid]="'workspace-support-tool-' + tool">{{ tool }}</span>
     </div>
   </mat-card>
 </section>

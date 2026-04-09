@@ -46,7 +46,7 @@
         </button>
         <mat-menu #tenantMenuN="matMenu">
           @for (membership of session.memberships; track membership.tenantId) {
-            <button mat-menu-item (click)="switchTenant(membership.tenantId)">
+            <button mat-menu-item (click)="switchTenant(membership.tenantId)" [attr.data-testid]="'app-tenant-switch-' + membership.tenantId">
               {{ membership.tenantName }} ({{ membership.tenantStatus }})
             </button>
           }
@@ -147,7 +147,7 @@
         </button>
         <mat-menu #tenantMenu="matMenu">
           @for (membership of session.memberships; track membership.tenantId) {
-            <button mat-menu-item (click)="switchTenant(membership.tenantId)">
+            <button mat-menu-item (click)="switchTenant(membership.tenantId)" [attr.data-testid]="'app-tenant-switch-' + membership.tenantId">
               {{ membership.tenantName }} | {{ membership.roles.join(', ') }} | {{ membership.tenantStatus }}
             </button>
           }

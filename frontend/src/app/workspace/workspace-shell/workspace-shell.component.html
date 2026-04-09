@@ -1,33 +1,36 @@
-<section class="workspace-shell">
-  <aside class="workspace-sidebar">
+<section class="workspace-shell" data-testid="workspace-shell">
+  <aside class="workspace-sidebar" data-testid="workspace-sidebar">
     <div class="sidebar-title">Product Workspace</div>
-    <a mat-stroked-button routerLink="/workspace" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <a mat-stroked-button routerLink="/workspace" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" data-testid="workspace-nav-overview">
       Overview
     </a>
     <a
       *ngIf="authService.hasPermission('tenant.manage')"
       mat-stroked-button
       routerLink="/workspace/admin"
-      routerLinkActive="active-link">
+      routerLinkActive="active-link"
+      data-testid="workspace-nav-admin">
       Admin
     </a>
     <a
       *ngIf="authService.hasPermission('clinical.read')"
       mat-stroked-button
       routerLink="/workspace/clinical"
-      routerLinkActive="active-link">
+      routerLinkActive="active-link"
+      data-testid="workspace-nav-clinical">
       Clinical
     </a>
     <a
       *ngIf="authService.hasPermission('support.access')"
       mat-stroked-button
       routerLink="/workspace/support"
-      routerLinkActive="active-link">
+      routerLinkActive="active-link"
+      data-testid="workspace-nav-support">
       Support
     </a>
   </aside>
 
-  <div class="workspace-body">
+  <div class="workspace-body" data-testid="workspace-body">
     <router-outlet></router-outlet>
   </div>
 </section>
