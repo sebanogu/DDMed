@@ -81,13 +81,6 @@ export class AppComponent {
     });
   }
 
-  private isLocalDevelopmentHost(): boolean {
-    if (typeof window === 'undefined' || !window.location?.hostname) {
-      return false;
-    }
-    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  }
-
   ngOnInit(): void {
     this.authService.session$.subscribe((session) => {
       this.session = session;
