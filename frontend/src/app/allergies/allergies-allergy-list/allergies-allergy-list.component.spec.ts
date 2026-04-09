@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AllergiesAllergyListComponent } from './allergies-allergy-list.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('AllergiesAllergyListComponent', () => {
   let component: AllergiesAllergyListComponent;
@@ -8,13 +8,14 @@ describe('AllergiesAllergyListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AllergiesAllergyListComponent ]
-    })
-    .compileComponents();
+      declarations: [AllergiesAllergyListComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AllergiesAllergyListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ValuesetTranslatorComponent } from './valueset-translator.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('ValuesetTranslatorComponent', () => {
   let component: ValuesetTranslatorComponent;
@@ -8,13 +8,14 @@ describe('ValuesetTranslatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ValuesetTranslatorComponent]
-    })
-    .compileComponents();
+      declarations: [ValuesetTranslatorComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ValuesetTranslatorComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

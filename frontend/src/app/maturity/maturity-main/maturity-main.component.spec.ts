@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MaturityMainComponent } from './maturity-main.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('MaturityMainComponent', () => {
   let component: MaturityMainComponent;
@@ -8,13 +8,14 @@ describe('MaturityMainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaturityMainComponent]
-    })
-    .compileComponents();
-    
+      declarations: [MaturityMainComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
+
     fixture = TestBed.createComponent(MaturityMainComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
