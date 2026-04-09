@@ -15,9 +15,9 @@
 2. Abrir la consola del navegador (F12 → Console)
 
 3. Navegar entre diferentes rutas:
-   - `http://localhost:4200/#/home`
-   - `http://localhost:4200/#/allergies`
-   - `http://localhost:4200/#/maturity`
+   - `http://localhost:4201/#/home`
+   - `http://localhost:4201/#/allergies`
+   - `http://localhost:4201/#/maturity`
 
 4. **Verificar en consola:**
    - Deberías ver: `[GA] Tracking disabled - Development mode or localhost`

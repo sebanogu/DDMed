@@ -30,9 +30,10 @@ interface CodeDisplay {
 })
 
 export class TerminologyService {
-  
-  
-  snowstormFhirBase = 'https://snowstorm.ihtsdotools.org/fhir';
+  private static readonly LOCAL_SNOWSTORM_FHIR_BASE = 'http://localhost:8082/fhir';
+  private static readonly REMOTE_SNOWSTORM_FHIR_BASE = 'https://snowstorm.ihtsdotools.org/fhir';
+
+  snowstormFhirBase = TerminologyService.getDefaultSnowstormFhirBase();
   defaultFhirUrlParam = 'http://snomed.info/sct'; // 'http://snomed.info/sct/11000221109/version/20211130'
   fhirUrlParam = this.defaultFhirUrlParam;
   lang = 'en';
@@ -72,6 +73,21 @@ export class TerminologyService {
   constructor(private http: HttpClient, private _snackBar: MatSnackBar) { 
     this.loadCache();
     this.loadLanguageMetadata();
+  }
+
+  private static getDefaultSnowstormFhirBase(): string {
+    const hostname = TerminologyService.getHostname();
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return TerminologyService.LOCAL_SNOWSTORM_FHIR_BASE;
+    }
+    return TerminologyService.REMOTE_SNOWSTORM_FHIR_BASE;
+  }
+
+  private static getHostname(): string {
+    if (typeof window === 'undefined' || !window.location?.hostname) {
+      return '';
+    }
+    return window.location.hostname;
   }
 
   /** Load language metadata for on-the-fly context calculation */

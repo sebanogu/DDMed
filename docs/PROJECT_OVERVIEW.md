@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`DDMed` is now organized as a small monorepo. Its current implemented product surface is an Angular frontend that demonstrates SNOMED CT implementation scenarios using FHIR terminology services. The repository also contains Python automation for generating analytical reports consumed by the frontend and placeholders for the future backend and infra layers.
+`DDMed` is organized as a small monorepo. Its current implemented product surface is an Angular frontend that demonstrates SNOMED CT implementation scenarios using FHIR terminology services. The repository also contains Python automation for generating analytical reports consumed by the frontend, a still-minimal backend scaffold, and an operational local Docker-based runtime for Snowstorm, HAPI FHIR, the SNOMED CT Browser, and supporting services.
 
 ## Main Areas
 
@@ -19,11 +19,11 @@
 - Current state: placeholder service with a basic `/health` endpoint
 - Intended role: product API, auth boundaries, and integrations with HAPI FHIR and Snowstorm
 
-### Infra scaffold
+### Infra runtime
 
 - Location: `infra/`
-- Current state: placeholder Compose files and environment template
-- Intended role: deployment topology, reverse proxy, and operational assets
+- Current state: working local Compose stack, runtime wiring, CORS-facing proxies for HAPI FHIR and Snowstorm, the SNOMED CT Browser, terminology assets, and environment templates
+- Intended role: deployment topology, runtime integration, reverse proxy, and operational assets
 
 ### Python tooling
 
@@ -87,6 +87,7 @@ Current architectural pressure points:
 
 - `AppModule` still declares many feature components that are not part of the first paint
 - `AppRoutingModule` still exposes many non-lazy top-level screens
+- the frontend still talks directly to HAPI FHIR and Snowstorm instead of going through the backend
 - documentation is uneven: some feature folders are documented well, but repository-wide architecture is not centralized
 - `techstack.md` is generated and no longer reflects current dependency versions
 

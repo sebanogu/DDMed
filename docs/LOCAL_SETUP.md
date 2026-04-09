@@ -34,6 +34,8 @@ From the repository root:
 npm run dev:up
 ```
 
+These npm scripts call `docker compose` directly, so they are intended to work across Windows, macOS, and Linux without requiring PowerShell.
+
 This starts the current local development stack with:
 
 - frontend
@@ -42,18 +44,48 @@ This starts the current local development stack with:
 - HAPI FHIR
 - Elasticsearch
 - Snowstorm
+- SNOMED CT Browser
+
+## Local Onboarding
+
+For a fresh local environment, the shortest path is:
+
+1. Start the stack:
+
+```bash
+npm run dev:up
+```
+
+2. Seed Snowstorm with the bundled IPS terminology:
+
+```bash
+npm run snowstorm:init:ips
+```
+
+After that, the local environment is ready to use.
+
+Notes:
+
+- `npm run dev:up` is used every time you want to start the stack.
+- `npm run snowstorm:init:ips` is typically only needed once for a fresh Snowstorm instance, or again if you want to reseed an empty instance.
 
 ## Local Endpoints
 
 Once the stack is up, these endpoints should be available:
 
-- frontend: `http://localhost:4200`
+- frontend: `http://localhost:4201`
 - backend: `http://localhost:3000`
 - backend health: `http://localhost:3000/health`
 - HAPI FHIR: `http://localhost:8081/fhir`
 - Snowstorm: `http://localhost:8082`
+- SNOMED CT Browser: `http://localhost:8083`
 - PostgreSQL: `localhost:5432`
 - Elasticsearch: `http://localhost:9200`
+
+When you access the Angular app at `http://localhost:4201`, the app now defaults to:
+
+- local Snowstorm FHIR at `http://localhost:8082/fhir`
+- local HAPI FHIR at `http://localhost:8081/fhir`
 
 ## Alternative Commands
 
@@ -73,6 +105,22 @@ Follow logs:
 
 ```bash
 npm run dev:logs
+```
+
+## Initialize the local IPS terminology
+
+Once Snowstorm is up, you can seed it with the bundled IPS terminology package:
+
+```bash
+npm run snowstorm:init:ips
+```
+
+The script imports `infra/terminology/ips/IPS-Terminology.zip` into the Snowstorm `MAIN` branch and waits for completion.
+
+Use the help output for advanced options:
+
+```bash
+npm run snowstorm:init:ips -- --help
 ```
 
 ## Frontend Only
@@ -124,10 +172,11 @@ Some services take longer to become healthy than the frontend. Wait for containe
 
 ## Suggested First Checks For A Collaborator
 
-1. Open `http://localhost:4200`
+1. Open `http://localhost:4201`
 2. Open `http://localhost:3000/health`
 3. Open `http://localhost:8081/fhir/metadata`
 4. Open `http://localhost:8082`
+5. Open `http://localhost:8083`
 
 If those respond, the local platform is basically alive.
 
