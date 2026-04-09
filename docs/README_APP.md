@@ -19,7 +19,7 @@ To run these demos locally:
 3. Run:
 `cd frontend && ng serve`
 
-Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Navigate to `http://localhost:4201/`. The application will automatically reload if you change any of the source files.
 
 ## Attribution
 
