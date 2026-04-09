@@ -7,21 +7,39 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class FhirService {
-  static readonly DEFAULT_BASE_URL = 'http://hapi.fhir.org/baseR4';
+  static readonly LOCAL_BASE_URL = 'http://localhost:8081/fhir';
+  static readonly REMOTE_BASE_URL = 'http://hapi.fhir.org/baseR4';
   private static readonly BASE_URL_STORAGE_KEY = 'baseUrl';
   private static readonly RECENT_BASE_URLS_STORAGE_KEY = 'recentBaseUrls';
   private static readonly MAX_RECENT_BASE_URLS = 6;
 
-  private baseUrlSubject = new BehaviorSubject<string>(FhirService.DEFAULT_BASE_URL);
+  private baseUrlSubject = new BehaviorSubject<string>(FhirService.getDefaultBaseUrl());
   baseUrl$ = this.baseUrlSubject.asObservable();
   private capabilityStatementCache = new Map<string, Observable<any>>();
   private patientSummarySupportCache = new Map<string, Observable<boolean>>();
 
   private userTagSubject = new BehaviorSubject<string>('');
   userTag$ = this.userTagSubject.asObservable();
+
+  private readonly defaultBaseUrl = FhirService.getDefaultBaseUrl();
   
   constructor(private http: HttpClient, private storageService: StorageService) {
     this.initialize();
+  }
+
+  static getDefaultBaseUrl(): string {
+    const hostname = FhirService.getHostname();
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return FhirService.LOCAL_BASE_URL;
+    }
+    return FhirService.REMOTE_BASE_URL;
+  }
+
+  private static getHostname(): string {
+    if (typeof window === 'undefined' || !window.location?.hostname) {
+      return '';
+    }
+    return window.location.hostname;
   }
   
   private initialize(): void {
@@ -39,15 +57,28 @@ export class FhirService {
     }
   }
 
-  setBaseUrl(url: string): void {
+  setBaseUrl(url: string, options?: { persist?: boolean }): void {
     const normalizedUrl = this.normalizeBaseUrl(url);
     this.baseUrlSubject.next(normalizedUrl);
+
+    if (options?.persist === false) {
+      return;
+    }
+
     this.storageService.saveItem(FhirService.BASE_URL_STORAGE_KEY, normalizedUrl);
     this.saveRecentBaseUrls(this.buildRecentBaseUrls(normalizedUrl, this.readStoredRecentBaseUrls()));
   }
 
   getBaseUrl(): string {
     return this.baseUrlSubject.getValue();
+  }
+
+  getDefaultConfiguredBaseUrl(): string {
+    return this.defaultBaseUrl;
+  }
+
+  useDefaultBaseUrl(options?: { persist?: boolean }): void {
+    this.setBaseUrl(this.defaultBaseUrl, options);
   }
 
   getRecentBaseUrls(): string[] {
@@ -288,8 +319,9 @@ export class FhirService {
   }
 
   private buildRecentBaseUrls(currentUrl: string, recentUrls: string[]): string[] {
-    const normalizedCurrentUrl = this.normalizeBaseUrl(currentUrl || FhirService.DEFAULT_BASE_URL);
-    const normalizedDefaultUrl = this.normalizeBaseUrl(FhirService.DEFAULT_BASE_URL);
+    const normalizedDefault = FhirService.getDefaultBaseUrl();
+    const normalizedCurrentUrl = this.normalizeBaseUrl(currentUrl || normalizedDefault);
+    const normalizedDefaultUrl = this.normalizeBaseUrl(normalizedDefault);
     const uniqueUrls = [normalizedCurrentUrl, ...recentUrls]
       .map((url) => this.normalizeBaseUrl(url))
       .filter((url, index, allUrls) => !!url && allUrls.indexOf(url) === index)

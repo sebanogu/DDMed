@@ -64,12 +64,15 @@ The repository now includes a first local development stack with:
 - HAPI FHIR
 - Elasticsearch
 - Snowstorm
+- SNOMED CT Browser
 
 Start it from the repository root with:
 
 ```bash
 npm run dev:up
 ```
+
+These root scripts are now platform-agnostic wrappers around `docker compose`, so they work the same way on Windows, macOS, and Linux as long as Docker Compose is installed.
 
 Or directly:
 
@@ -79,11 +82,17 @@ docker compose -f infra/compose.yaml -f infra/compose.dev.yaml up --build
 
 Default local endpoints:
 
-- frontend: `http://localhost:4200`
+- frontend: `http://localhost:4201`
 - backend: `http://localhost:3000`
 - backend health: `http://localhost:3000/health`
 - HAPI FHIR: `http://localhost:8081/fhir`
 - Snowstorm: `http://localhost:8082`
+- SNOMED CT Browser: `http://localhost:8083`
+
+When the frontend is opened from `localhost`, it now defaults to the local terminology stack:
+
+- Snowstorm FHIR default: `http://localhost:8082/fhir`
+- HAPI FHIR default for questionnaire/patient FHIR flows: `http://localhost:8081/fhir`
 
 Stop the stack with:
 

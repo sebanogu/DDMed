@@ -13,7 +13,7 @@ import { AppMaterialModule } from '../../shared/app-material.module';
       <h2 mat-dialog-title>FHIR Server</h2>
       <mat-dialog-content>
         <p class="dialog-copy">
-          Benefits Demo can connect to the default public HAPI server or any other FHIR R4 endpoint you provide here.
+          Benefits Demo can connect to the default FHIR server for the current environment or any other FHIR R4 endpoint you provide here.
         </p>
 
         <mat-form-field appearance="outline">
@@ -111,7 +111,7 @@ export class FhirServerDialogComponent {
   }
 
   isDefaultDemoServer(serverUrl: string): boolean {
-    return serverUrl === FhirService.DEFAULT_BASE_URL;
+    return serverUrl === FhirService.getDefaultBaseUrl();
   }
 
   filteredRecentBaseUrls(): string[] {
@@ -126,10 +126,11 @@ export class FhirServerDialogComponent {
     }
 
     const matchingUrls = this.recentBaseUrls.filter((serverUrl) => serverUrl.toLowerCase().includes(normalizedTerm));
-    if (matchingUrls.includes(FhirService.DEFAULT_BASE_URL)) {
+    const defaultBaseUrl = FhirService.getDefaultBaseUrl();
+    if (matchingUrls.includes(defaultBaseUrl)) {
       return matchingUrls;
     }
 
-    return [...matchingUrls, FhirService.DEFAULT_BASE_URL];
+    return [...matchingUrls, defaultBaseUrl];
   }
 }

@@ -12,8 +12,10 @@
     "frontend:clean": "npm --prefix frontend run clean",
     "backend:start": "npm --prefix backend start",
     "backend:dev": "npm --prefix backend run dev",
-    "dev:up": "powershell -ExecutionPolicy Bypass -File ./scripts/dev-up.ps1",
-    "dev:down": "powershell -ExecutionPolicy Bypass -File ./scripts/dev-down.ps1",
-    "dev:logs": "powershell -ExecutionPolicy Bypass -File ./scripts/dev-logs.ps1"
+    "dev:up": "docker compose -f infra/compose.yaml -f infra/compose.dev.yaml up --build",
+    "dev:down": "docker compose -f infra/compose.yaml -f infra/compose.dev.yaml down",
+    "dev:logs": "docker compose -f infra/compose.yaml -f infra/compose.dev.yaml logs -f",
+    "snowstorm:init:ips": "node scripts/init-snowstorm-ips.mjs",
+    "snowstorm:name:ips": "node scripts/init-snowstorm-ips.mjs --update-name-only"
   }
 }
