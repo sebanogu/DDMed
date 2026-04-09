@@ -1,10 +1,10 @@
 # DDMed Monorepo
 
-This repository is now organized as a small monorepo that separates the product platform into three main components:
+This repository is organized as a small monorepo that separates the platform into three main components:
 
 - `frontend/`: the Angular application and related frontend tooling
-- `backend/`: the future product API layer that will own business logic, auth boundaries, and integrations
-- `infra/`: Docker Compose, reverse proxy, environment templates, and deployment-oriented assets
+- `backend/`: the product API layer in progress, currently still a scaffold
+- `infra/`: Docker Compose, runtime wiring, terminology assets, and deployment-oriented configuration
 
 Additional supporting areas:
 
@@ -14,9 +14,11 @@ Additional supporting areas:
 
 ## Current State
 
-- The existing application has been moved into `frontend/`.
-- `backend/` has been scaffolded as a placeholder for the upcoming API service.
-- `infra/` has been scaffolded for the future Compose-based runtime.
+- The main Angular application lives in `frontend/`.
+- The local development stack is operational through Docker Compose.
+- Snowstorm, HAPI FHIR, PostgreSQL, Elasticsearch, and the SNOMED CT Browser are wired into the local environment.
+- The repository includes a bundled IPS terminology archive plus an initializer script for seeding Snowstorm.
+- `backend/` is still a minimal scaffold with a health endpoint and environment wiring, but not yet the active integration layer between the frontend and the terminology/FHIR services.
 
 ## Repository Layout
 
@@ -38,6 +40,7 @@ Run the Angular application from `frontend/`:
 cd frontend
 npm install
 npm start
+```
 
 Or use the root wrapper scripts:
 
@@ -72,7 +75,7 @@ Start it from the repository root with:
 npm run dev:up
 ```
 
-These root scripts are now platform-agnostic wrappers around `docker compose`, so they work the same way on Windows, macOS, and Linux as long as Docker Compose is installed.
+These root scripts are platform-agnostic wrappers around `docker compose`, so they work the same way on Windows, macOS, and Linux as long as Docker Compose is installed.
 
 Or directly:
 
@@ -93,6 +96,7 @@ When the frontend is opened from `localhost`, it now defaults to the local termi
 
 - Snowstorm FHIR default: `http://localhost:8082/fhir`
 - HAPI FHIR default for questionnaire/patient FHIR flows: `http://localhost:8081/fhir`
+- Benefits Demo resets to the local HAPI FHIR server by default when it loads.
 
 ## Local Onboarding
 
@@ -124,7 +128,6 @@ npm run dev:down
 ```
 
 For collaborator onboarding, see [Local Setup](docs/LOCAL_SETUP.md).
-```
 
 ## Documentation
 

@@ -46,6 +46,29 @@ This starts the current local development stack with:
 - Snowstorm
 - SNOMED CT Browser
 
+## Local Onboarding
+
+For a fresh local environment, the shortest path is:
+
+1. Start the stack:
+
+```bash
+npm run dev:up
+```
+
+2. Seed Snowstorm with the bundled IPS terminology:
+
+```bash
+npm run snowstorm:init:ips
+```
+
+After that, the local environment is ready to use.
+
+Notes:
+
+- `npm run dev:up` is used every time you want to start the stack.
+- `npm run snowstorm:init:ips` is typically only needed once for a fresh Snowstorm instance, or again if you want to reseed an empty instance.
+
 ## Local Endpoints
 
 Once the stack is up, these endpoints should be available:
