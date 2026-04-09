@@ -57,7 +57,7 @@ jobs:
         working-directory: ./frontend
         env:
           CI: true
-          DB_HOST: 127.0.0.1
+          DB_HOST: postgres
           DB_PORT: 5432
           DB_NAME: ddmed_auth_e2e
           DB_USER: postgres
