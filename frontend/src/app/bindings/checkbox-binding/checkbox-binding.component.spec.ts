@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CheckBoxBindingComponent } from './checkbox-binding.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('CheckBoxBindingComponent', () => {
   let component: CheckBoxBindingComponent;
@@ -8,15 +8,14 @@ describe('CheckBoxBindingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CheckBoxBindingComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [CheckBoxBindingComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CheckBoxBindingComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

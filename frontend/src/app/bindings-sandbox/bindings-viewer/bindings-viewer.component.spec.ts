@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BindingsViewerComponent } from './bindings-viewer.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('BindingsViewerComponent', () => {
   let component: BindingsViewerComponent;
@@ -8,13 +8,14 @@ describe('BindingsViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BindingsViewerComponent]
-    })
-    .compileComponents();
-    
+      declarations: [BindingsViewerComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
+
     fixture = TestBed.createComponent(BindingsViewerComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

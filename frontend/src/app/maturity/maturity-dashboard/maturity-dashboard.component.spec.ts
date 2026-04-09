@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MaturityDashboardComponent } from './maturity-dashboard.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('MaturityDashboardComponent', () => {
   let component: MaturityDashboardComponent;
@@ -8,13 +8,14 @@ describe('MaturityDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaturityDashboardComponent]
-    })
-    .compileComponents();
+      declarations: [MaturityDashboardComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MaturityDashboardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
