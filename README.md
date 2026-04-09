@@ -94,6 +94,29 @@ When the frontend is opened from `localhost`, it now defaults to the local termi
 - Snowstorm FHIR default: `http://localhost:8082/fhir`
 - HAPI FHIR default for questionnaire/patient FHIR flows: `http://localhost:8081/fhir`
 
+## Local Onboarding
+
+For a new local environment, the shortest path is:
+
+1. Start the stack:
+
+```bash
+npm run dev:up
+```
+
+2. Seed Snowstorm with the bundled IPS terminology:
+
+```bash
+npm run snowstorm:init:ips
+```
+
+After that, the local environment is ready to use.
+
+Notes:
+
+- `npm run dev:up` is used every time you want to start the stack.
+- `npm run snowstorm:init:ips` is typically only needed once for a fresh Snowstorm instance, or again if you want to reseed an empty instance.
+
 Stop the stack with:
 
 ```bash
