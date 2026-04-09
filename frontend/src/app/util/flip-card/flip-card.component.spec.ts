@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FlipCardComponent } from './flip-card.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('FlipCardComponent', () => {
   let component: FlipCardComponent;
@@ -8,13 +8,14 @@ describe('FlipCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlipCardComponent]
-    })
-    .compileComponents();
+      declarations: [FlipCardComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FlipCardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

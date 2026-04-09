@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoincMainComponent } from './loinc-main.component';
+import { createShallowProviders, shallowTestImports, shallowTestSchemas } from 'src/testing/shallow-test-helpers';
 
 describe('LoincMainComponent', () => {
   let component: LoincMainComponent;
@@ -8,13 +8,14 @@ describe('LoincMainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoincMainComponent]
-    })
-    .compileComponents();
-    
+      declarations: [LoincMainComponent],
+      imports: [...shallowTestImports],
+      providers: createShallowProviders(),
+      schemas: shallowTestSchemas
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LoincMainComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

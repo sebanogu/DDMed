@@ -10,6 +10,7 @@
     "frontend:build:test": "npm --prefix frontend run build:test",
     "frontend:test": "npm --prefix frontend test",
     "frontend:e2e": "npm --prefix frontend run e2e",
+    "frontend:test:ci": "npm --prefix frontend test -- --watch=false --browsers=ChromeHeadless",
     "frontend:clean": "npm --prefix frontend run clean",
     "backend:start": "npm --prefix backend start",
     "backend:dev": "npm --prefix backend run dev",
