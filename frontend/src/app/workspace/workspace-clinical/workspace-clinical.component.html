@@ -1,9 +1,9 @@
-<section class="workspace-view">
+<section class="workspace-view" data-testid="workspace-clinical-page">
   <div class="eyebrow">Clinical Permission</div>
   <h1>Clinical workspace</h1>
-  <mat-card *ngIf="data">
-    <p>{{ data.message }}</p>
-    <ul>
+  <mat-card *ngIf="data" data-testid="workspace-clinical-card">
+    <p data-testid="workspace-clinical-message">{{ data.message }}</p>
+    <ul data-testid="workspace-clinical-queues">
       <li *ngFor="let queue of data.queues">
         {{ queue.name }} - {{ queue.openItems }} open items
       </li>

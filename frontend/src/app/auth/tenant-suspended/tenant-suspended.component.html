@@ -1,31 +1,32 @@
-<section class="state-page">
-  <mat-card>
+<section class="state-page" data-testid="auth-tenant-suspended-page">
+  <mat-card data-testid="auth-tenant-suspended-card">
     <div class="state-label">Tenant Status Enforcement</div>
     <h1>Tenant access is suspended</h1>
     <p>
       The active tenant is currently suspended, so protected workflows are blocked.
     </p>
 
-    <div class="tenant-box" *ngIf="session?.activeTenant as activeTenant">
-      <strong>{{ activeTenant.tenantName }}</strong>
-      <span>Status: {{ activeTenant.tenantStatus }}</span>
+    <div class="tenant-box" *ngIf="session?.activeTenant as activeTenant" data-testid="auth-tenant-suspended-active-tenant">
+      <strong data-testid="auth-tenant-suspended-active-tenant-name">{{ activeTenant.tenantName }}</strong>
+      <span data-testid="auth-tenant-suspended-active-tenant-status">Status: {{ activeTenant.tenantStatus }}</span>
     </div>
 
-    <div *ngIf="session?.memberships?.length" class="tenant-list">
+    <div *ngIf="session?.memberships?.length" class="tenant-list" data-testid="auth-tenant-switch-list">
       <h2>Switch to another tenant</h2>
       <button
         *ngFor="let membership of session?.memberships"
         mat-stroked-button
         color="primary"
         [disabled]="membership.tenantId === session?.activeTenant?.tenantId"
-        (click)="switchTenant(membership.tenantId)">
+        (click)="switchTenant(membership.tenantId)"
+        [attr.data-testid]="'auth-tenant-switch-' + membership.tenantId">
         <span>{{ membership.tenantName }}</span>
         <small>{{ membership.tenantStatus }} | {{ membership.roles.join(', ') }}</small>
       </button>
     </div>
 
-    <div class="actions">
-      <button mat-flat-button color="warn" (click)="logout()">Sign out</button>
+    <div class="actions" data-testid="auth-tenant-suspended-actions">
+      <button mat-flat-button color="warn" (click)="logout()" data-testid="auth-tenant-suspended-signout">Sign out</button>
     </div>
   </mat-card>
 </section>

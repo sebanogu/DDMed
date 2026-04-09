@@ -1,4 +1,4 @@
-<section class="auth-page">
+<section class="auth-page" data-testid="auth-login-page">
   <mat-card class="auth-card">
     <div class="eyebrow">Tenant-Aware Authentication</div>
     <h1>Sign in</h1>
@@ -6,42 +6,43 @@
       This demo session model supports multiple tenants and multiple roles per user.
     </p>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
-      <mat-form-field appearance="outline">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form" data-testid="auth-login-form">
+      <mat-form-field appearance="outline" data-testid="auth-login-email-field">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" autocomplete="username">
+        <input matInput formControlName="email" type="email" autocomplete="username" data-testid="auth-login-email-input">
         <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
           Enter a valid email address.
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" data-testid="auth-login-password-field">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" autocomplete="current-password">
+        <input matInput formControlName="password" type="password" autocomplete="current-password" data-testid="auth-login-password-input">
         <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
           Password is required.
         </mat-error>
       </mat-form-field>
 
-      <div class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="error-banner" *ngIf="errorMessage" data-testid="auth-login-error">{{ errorMessage }}</div>
 
-      <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading" data-testid="auth-login-submit">
         {{ loading ? 'Signing in...' : 'Sign in' }}
       </button>
     </form>
   </mat-card>
 
-  <mat-card class="demo-card">
+  <mat-card class="demo-card" data-testid="auth-demo-users">
     <h2>Demo accounts</h2>
     <p>Use one of these users to exercise multi-role RBAC and tenant switching.</p>
 
-    <div class="demo-users">
+    <div class="demo-users" data-testid="auth-demo-users-list">
       <button
         *ngFor="let demoUser of demoUsers"
         mat-stroked-button
         type="button"
         color="primary"
-        (click)="fillDemoUser(demoUser.email, demoUser.password)">
+        (click)="fillDemoUser(demoUser.email, demoUser.password)"
+        [attr.data-testid]="'auth-demo-user-' + demoUser.email">
         <span>{{ demoUser.email }}</span>
         <small>{{ demoUser.label }}</small>
       </button>
