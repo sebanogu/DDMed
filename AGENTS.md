@@ -5,6 +5,7 @@
 - Project artifacts should be written in English.
 - Use English for source code, identifiers, comments, Git comments, commit messages, docs, and user-facing UI copy unless a specific feature explicitly requires another language.
 - It is fine to collaborate in Spanish while developing, but changes committed to the repository should remain in English by default.
+- Commit messages should clearly describe the goal of the change and what was done so collaborators can understand the intent from history.
 
 ## Angular Modularization
 
@@ -62,6 +63,13 @@
   should this be lazy?
   does this pull in a heavy library?
   should this live in a shared module or a feature module?
+
+## Scripts
+
+- New scripts should run on Windows, Linux, and macOS by default.
+- Prefer platform-agnostic `npm` scripts and Node-based helpers over shell-specific syntax.
+- Do not introduce PowerShell-only, Bash-only, or `.bat`-only script behavior unless the task explicitly requires a platform-specific script.
+- If a platform-specific script is unavoidable, keep it separate and provide a cross-platform default entry point for normal project workflows.
 
 ## Practical Rule
 
