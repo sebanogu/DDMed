@@ -40,6 +40,23 @@
         }
       </mat-menu>
 
+      @if (session) {
+        <button mat-button [matMenuTriggerFor]="tenantMenuN">
+          Tenant: {{ session.activeTenant?.tenantName || 'None' }}
+        </button>
+        <mat-menu #tenantMenuN="matMenu">
+          @for (membership of session.memberships; track membership.tenantId) {
+            <button mat-menu-item (click)="switchTenant(membership.tenantId)">
+              {{ membership.tenantName }} ({{ membership.tenantStatus }})
+            </button>
+          }
+        </mat-menu>
+        <button mat-button (click)="navigateToWorkspace()">Workspace</button>
+        <button mat-button (click)="logout()">Sign out</button>
+      } @else if (authInitialized) {
+        <button mat-button (click)="navigateToLogin()">Sign in</button>
+      }
+
     </div>
   </mat-drawer>
 
@@ -124,6 +141,37 @@
       <a mat-flat-button href="https://github.com/IHTSDO/sct-implementation-demonstrator" target="_blank" color="primary" id="info-button">
         <mat-icon>info</mat-icon>
       </a>
+      @if (session) {
+        <button mat-flat-button color="accent" [matMenuTriggerFor]="tenantMenu" class="bar-button auth-button">
+          {{ session.activeTenant?.tenantName || 'No Tenant' }}
+        </button>
+        <mat-menu #tenantMenu="matMenu">
+          @for (membership of session.memberships; track membership.tenantId) {
+            <button mat-menu-item (click)="switchTenant(membership.tenantId)">
+              {{ membership.tenantName }} | {{ membership.roles.join(', ') }} | {{ membership.tenantStatus }}
+            </button>
+          }
+        </mat-menu>
+        <button mat-flat-button color="accent" class="bar-button auth-button" (click)="navigateToWorkspace()">
+          Workspace
+        </button>
+        <button mat-stroked-button class="auth-user-button" [matMenuTriggerFor]="authMenu">
+          {{ session.user.displayName }}
+        </button>
+        <mat-menu #authMenu="matMenu">
+          <div mat-menu-item style="cursor: default; pointer-events: none;">
+            {{ session.user.email }}
+          </div>
+          <div mat-menu-item style="cursor: default; pointer-events: none;">
+            Roles: {{ session.effectiveRoles.join(', ') }}
+          </div>
+          <button mat-menu-item (click)="logout()">Sign out</button>
+        </mat-menu>
+      } @else if (authInitialized) {
+        <button mat-flat-button color="accent" class="auth-button" (click)="navigateToLogin()">
+          Sign in
+        </button>
+      }
     </mat-toolbar>
   }
   @if (loadingModule) {

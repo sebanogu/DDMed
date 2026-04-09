@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AllergiesComponent } from './allergies/allergies.component';
+import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
+import { authGuard, guestOnlyGuard } from './auth/guards/auth.guards';
+import { LoginComponent } from './auth/login/login.component';
+import { TenantSuspendedComponent } from './auth/tenant-suspended/tenant-suspended.component';
 import { BindingsSandboxComponent } from './bindings-sandbox/bindings-sandbox.component';
 import { ContextMainComponent } from './context/context-main/context-main.component';
 import { CrsBatchGeneratorComponent } from './crs-batch-generator/crs-batch-generator.component';
@@ -30,6 +34,10 @@ import { SvDemoComponent } from './sv-demo/sv-demo.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent, canActivate: [guestOnlyGuard] },
+  { path: 'access-denied', component: AccessDeniedComponent },
+  { path: 'tenant-suspended', component: TenantSuspendedComponent, canActivate: [authGuard] },
+  { path: 'workspace', loadChildren: () => import('./workspace/workspace.module').then((m) => m.WorkspaceModule), canActivate: [authGuard] },
   { path: 'allergies', component: AllergiesComponent },
   { path: 'sandbox', component: BindingsSandboxComponent },
   { path: 'prescription', component: PrescriptionMainComponent },

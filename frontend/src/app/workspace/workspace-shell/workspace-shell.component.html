@@ -1,0 +1,33 @@
+<section class="workspace-shell">
+  <aside class="workspace-sidebar">
+    <div class="sidebar-title">Product Workspace</div>
+    <a mat-stroked-button routerLink="/workspace" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      Overview
+    </a>
+    <a
+      *ngIf="authService.hasPermission('tenant.manage')"
+      mat-stroked-button
+      routerLink="/workspace/admin"
+      routerLinkActive="active-link">
+      Admin
+    </a>
+    <a
+      *ngIf="authService.hasPermission('clinical.read')"
+      mat-stroked-button
+      routerLink="/workspace/clinical"
+      routerLinkActive="active-link">
+      Clinical
+    </a>
+    <a
+      *ngIf="authService.hasPermission('support.access')"
+      mat-stroked-button
+      routerLink="/workspace/support"
+      routerLinkActive="active-link">
+      Support
+    </a>
+  </aside>
+
+  <div class="workspace-body">
+    <router-outlet></router-outlet>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+<section class="workspace-view">
+  <div class="eyebrow">Clinical Permission</div>
+  <h1>Clinical workspace</h1>
+  <mat-card *ngIf="data">
+    <p>{{ data.message }}</p>
+    <ul>
+      <li *ngFor="let queue of data.queues">
+        {{ queue.name }} - {{ queue.openItems }} open items
+      </li>
+    </ul>
+  </mat-card>
+</section>

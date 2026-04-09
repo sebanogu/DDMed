@@ -1,0 +1,17 @@
+<section class="state-page">
+  <mat-card>
+    <div class="state-label">RBAC Enforcement</div>
+    <h1>Access denied</h1>
+    <p>
+      Your active tenant membership does not include the permission required for this route.
+    </p>
+    <p *ngIf="permission" class="permission-chip">
+      Required permission: <strong>{{ permission }}</strong>
+    </p>
+
+    <div class="actions">
+      <button mat-flat-button color="primary" (click)="goBack()">Return</button>
+      <a mat-stroked-button routerLink="/workspace">Workspace</a>
+    </div>
+  </mat-card>
+</section>

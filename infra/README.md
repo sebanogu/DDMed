@@ -22,6 +22,8 @@ The repository now includes a first development-oriented Docker Compose stack fo
 - Elasticsearch
 - Snowstorm
 
+The backend auth demo users are seeded only in the development override because `compose.dev.yaml` sets `SEED_DEMO_AUTH=true`.
+
 Run it with:
 
 ```bash

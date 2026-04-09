@@ -36,10 +36,12 @@ import { SvDemoComponent } from './sv-demo/sv-demo.component';
 import { firebaseConfig } from '../environments/firebase.config';
 import { AllergiesModule } from './shared/allergies.module';
 import { AppMaterialModule } from './shared/app-material.module';
+import { AuthModule } from './auth/auth.module';
 import { BindingsModule } from './shared/bindings.module';
 import { LoincModule } from './shared/loinc.module';
 import { QuestionnairesSharedModule } from './shared/questionnaires-shared.module';
 import { UiSharedModule } from './shared/ui-shared.module';
+import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
 import { FhirRateLimitInterceptor } from './interceptors/fhir-rate-limit.interceptor';
 
 initializeApp(firebaseConfig);
@@ -82,6 +84,7 @@ initializeApp(firebaseConfig);
     AppMaterialModule,
     AppRoutingModule,
     AllergiesModule,
+    AuthModule,
     BindingsModule,
     LoincModule,
     QuestionnairesSharedModule,
@@ -92,6 +95,11 @@ initializeApp(firebaseConfig);
     {
       provide: HTTP_INTERCEPTORS,
       useClass: FhirRateLimitInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
       multi: true
     }
   ],

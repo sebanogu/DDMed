@@ -1,0 +1,56 @@
+.workspace-view {
+  display: grid;
+  gap: 20px;
+}
+
+.view-header h1 {
+  margin: 6px 0 10px;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #48647f;
+}
+
+.view-header p {
+  margin: 0;
+  color: #5a6d80;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+mat-card {
+  border-radius: 18px;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #dce8f5;
+  color: #26415d;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.chip-permission {
+  background: #e8f2e5;
+  color: #235438;
+}
+
+@media (max-width: 900px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
