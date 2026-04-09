@@ -2,6 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 
 const frontendPort = Number(process.env.PLAYWRIGHT_FRONTEND_PORT || 4200);
 const backendPort = Number(process.env.PLAYWRIGHT_BACKEND_PORT || 3000);
+const useStaticFrontendInCi = Boolean(process.env.CI);
+const frontendCommand = useStaticFrontendInCi
+  ? `npm run build:test && node scripts/serve-dist.mjs dist ${frontendPort}`
+  : `npx ng serve --host 127.0.0.1 --port ${frontendPort}`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -35,7 +39,7 @@ export default defineConfig({
       },
     },
     {
-      command: `npx ng serve --host 127.0.0.1 --port ${frontendPort}`,
+      command: frontendCommand,
       cwd: '.',
       port: frontendPort,
       reuseExistingServer: !process.env.CI,
