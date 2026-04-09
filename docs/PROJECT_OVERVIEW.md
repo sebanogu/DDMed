@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`DDMed` is organized as a small monorepo. Its current implemented product surface is an Angular frontend that demonstrates SNOMED CT implementation scenarios using FHIR terminology services. The repository also contains Python automation for generating analytical reports consumed by the frontend, a still-minimal backend scaffold, and an operational local Docker-based runtime for Snowstorm, HAPI FHIR, and supporting services.
+`DDMed` is organized as a small monorepo. Its current implemented product surface is an Angular frontend that demonstrates SNOMED CT implementation scenarios using FHIR terminology services. The repository also contains Python automation for generating analytical reports consumed by the frontend, a still-minimal backend scaffold, and an operational local Docker-based runtime for Snowstorm, HAPI FHIR, the SNOMED CT Browser, and supporting services.
 
 ## Main Areas
 
@@ -22,7 +22,7 @@
 ### Infra runtime
 
 - Location: `infra/`
-- Current state: working local Compose stack, runtime wiring, CORS-facing proxies for HAPI FHIR and Snowstorm, terminology assets, and environment templates
+- Current state: working local Compose stack, runtime wiring, CORS-facing proxies for HAPI FHIR and Snowstorm, the SNOMED CT Browser, terminology assets, and environment templates
 - Intended role: deployment topology, runtime integration, reverse proxy, and operational assets
 
 ### Python tooling

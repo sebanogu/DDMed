@@ -17,6 +17,7 @@ Additional supporting areas:
 - The main Angular application lives in `frontend/`.
 - The local development stack is operational through Docker Compose.
 - Snowstorm, HAPI FHIR, PostgreSQL, Elasticsearch, and the SNOMED CT Browser are wired into the local environment.
+- The local runtime includes the official SNOMED CT Browser for inspecting the loaded terminology.
 - The repository includes a bundled IPS terminology archive plus an initializer script for seeding Snowstorm.
 - `backend/` is still a minimal scaffold with a health endpoint and environment wiring, but not yet the active integration layer between the frontend and the terminology/FHIR services.
 
