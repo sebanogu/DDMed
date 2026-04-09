@@ -1,30 +1,104 @@
-# Implementation Demonstrator
+# DDMed Monorepo
 
-This project hosts a collection of open-source SNOMED Implementation examples using FHIR terminology services. It is expected to grow  with new use cases and user interfaces.
+This repository is now organized as a small monorepo that separates the product platform into three main components:
 
-## Live demo
+- `frontend/`: the Angular application and related frontend tooling
+- `backend/`: the future product API layer that will own business logic, auth boundaries, and integrations
+- `infra/`: Docker Compose, reverse proxy, environment templates, and deployment-oriented assets
 
-This app is available on [this demo site](https://ihtsdo.github.io/sct-implementation-demonstrator/#/).
+Additional supporting areas:
 
-## Development server
+- `docs/`: architecture, roadmap, and execution documents
+- `python/`: standalone Python tooling and reporting utilities
+- `scripts/`: repository-level GitHub automation scripts
 
-To run these demos locally:
+## Current State
 
-1. Install Angular CLI:
-`npm install -g @angular/cli`
+- The existing application has been moved into `frontend/`.
+- `backend/` has been scaffolded as a placeholder for the upcoming API service.
+- `infra/` has been scaffolded for the future Compose-based runtime.
 
-2. Build:
-`npm install`
+## Repository Layout
 
-3. Run:
-`ng serve` 
+```text
+DDMed/
+  frontend/
+  backend/
+  infra/
+  docs/
+  python/
+  scripts/
+```
 
-Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Frontend Development
 
-## Attribution
+Run the Angular application from `frontend/`:
 
-The Dentistry odontogram feature in this project is inspired by the following open-source project:
+```bash
+cd frontend
+npm install
+npm start
 
-- [react-odontogram](https://github.com/biomathcode/react-odontogram) by [biomathcode](https://github.com/biomathcode)
+Or use the root wrapper scripts:
 
-We reused and adapted SVG tooth path data from that project. `react-odontogram` is licensed under the MIT License.
+```bash
+npm run frontend:install
+npm run frontend:start
+```
+
+## Backend Development
+
+The backend is currently a scaffold, but it can be started from the repo root:
+
+```bash
+npm run backend:start
+```
+
+## Local Full Stack With Docker Compose
+
+The repository now includes a first local development stack with:
+
+- Angular frontend
+- backend scaffold
+- PostgreSQL
+- HAPI FHIR
+- Elasticsearch
+- Snowstorm
+
+Start it from the repository root with:
+
+```bash
+npm run dev:up
+```
+
+Or directly:
+
+```bash
+docker compose -f infra/compose.yaml -f infra/compose.dev.yaml up --build
+```
+
+Default local endpoints:
+
+- frontend: `http://localhost:4200`
+- backend: `http://localhost:3000`
+- backend health: `http://localhost:3000/health`
+- HAPI FHIR: `http://localhost:8081/fhir`
+- Snowstorm: `http://localhost:8082`
+
+Stop the stack with:
+
+```bash
+npm run dev:down
+```
+
+For collaborator onboarding, see [Local Setup](docs/LOCAL_SETUP.md).
+```
+
+## Documentation
+
+Start with:
+
+- [Project Overview](docs/PROJECT_OVERVIEW.md)
+- [SaaS Hosting Roadmap](docs/SAAS_HOSTING_ROADMAP.md)
+- [Compose MVP Execution Plan](docs/COMPOSE_MVP_EXECUTION_PLAN.md)
+- [Original App README](docs/README_APP.md)

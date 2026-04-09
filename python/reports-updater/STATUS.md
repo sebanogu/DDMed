@@ -91,7 +91,7 @@ python3 run-reports.py
    - New concepts
 6. 💾 Save 6 files:
    - 3 Excel files → `python/output/` (local)
-   - 3 HTML files → `src/assets/reports/` (web)
+- 3 HTML files → `frontend/src/assets/reports/` (web)
 
 ---
 

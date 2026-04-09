@@ -1,0 +1,104 @@
+services:
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - public
+      - internal
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.dev
+    environment:
+      PORT: 3000
+      HAPI_FHIR_BASE_URL: http://hapi-fhir:8080/fhir
+      SNOWSTORM_BASE_URL: http://snowstorm:8080
+    depends_on:
+      hapi-fhir:
+        condition: service_started
+      snowstorm:
+        condition: service_started
+    networks:
+      - public
+      - internal
+
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hapi
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  hapi-fhir:
+    image: hapiproject/hapi:latest
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_started
+    volumes:
+      - ./hapi/application.yaml:/app/config/application.yaml:ro
+    networks:
+      - internal
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      node.name: snowstorm
+      cluster.name: snowstorm-cluster
+      ES_JAVA_OPTS: -Xms1g -Xmx1g
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    networks:
+      internal:
+        aliases:
+          - es
+
+  snowstorm:
+    image: snomedinternational/snowstorm:latest
+    restart: unless-stopped
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    entrypoint:
+      - java
+      - -Xms1g
+      - -Xmx2g
+      - --add-opens
+      - java.base/java.lang=ALL-UNNAMED
+      - --add-opens=java.base/java.util=ALL-UNNAMED
+      - -cp
+      - "@/app/jib-classpath-file"
+      - org.snomed.snowstorm.SnowstormApplication
+      - --elasticsearch.urls=http://es:9200
+    networks:
+      internal:
+        aliases:
+          - snowstorm
+
+networks:
+  public:
+  internal:
+
+volumes:
+  postgres-data:
+  elasticsearch-data:

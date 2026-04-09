@@ -55,7 +55,7 @@ python/output/
 
 **HTML files** (for web, committed to Git):
 ```
-src/assets/reports/
+frontend/src/assets/reports/
 ├── detect_inactivations_by_reason.html
 ├── fsn_changes_with_details.html
 └── new_concepts_by_semantic_tag.html

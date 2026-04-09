@@ -1,0 +1,10 @@
+{
+  "name": "ddmed-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend scaffold for the DDMed platform monorepo",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js"
+  }
+}

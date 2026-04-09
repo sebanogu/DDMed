@@ -9,7 +9,7 @@
 **Pasos:**
 1. Ejecutar la aplicación en modo desarrollo:
    ```bash
-   ng serve
+   npm run frontend:start
    ```
 
 2. Abrir la consola del navegador (F12 → Console)
@@ -36,15 +36,15 @@
 
 1. Hacer build en modo producción con baseHref local:
    ```bash
-   npm run build:test
+   npm run frontend:build:test
    ```
    
    **Nota:** Este comando usa `--base-href /` para que funcione localmente. 
-   Para producción en GitHub Pages, usa `npm run build` (que usa el baseHref correcto).
+   Para producción en GitHub Pages, usa `npm run frontend:build` (que usa el baseHref correcto).
 
 2. Servir los archivos estáticos (puedes usar `http-server`):
    ```bash
-   npx http-server docs -p 8080
+   npx http-server frontend/dist -p 8080
    ```
 
 3. Abrir en el navegador: `http://localhost:8080`

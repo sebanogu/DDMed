@@ -103,7 +103,7 @@ SNOMED_PASSWORD      •••••••••••••••   Updated X s
 3. ✅ Installs dependencies
 4. ✅ Downloads latest SNOMED International release
 5. ✅ Generates 3 HTML reports
-6. ✅ Commits HTML files to `src/assets/reports/`
+6. ✅ Commits HTML files to `frontend/src/assets/reports/`
 7. ✅ Pushes changes to repository
 
 ## Viewing Results
@@ -117,7 +117,7 @@ After successful execution:
 
 2. View updated files:
    ```
-   src/assets/reports/
+frontend/src/assets/reports/
    ├── detect_inactivations_by_reason.html
    ├── fsn_changes_with_details.html
    └── new_concepts_by_semantic_tag.html

@@ -54,7 +54,7 @@ After successful run:
    "🤖 Auto-update: SNOMED reports for YYYY-MM-DD"
 
 ✅ Verify new files in:
-   src/assets/reports/
+frontend/src/assets/reports/
    ├── detect_inactivations_by_reason.html
    ├── fsn_changes_with_details.html
    └── new_concepts_by_semantic_tag.html
@@ -78,7 +78,7 @@ After successful run:
 ### First Run Test
 
 - [ ] Manual workflow execution succeeded
-- [ ] HTML files generated in `src/assets/reports/`
+- [ ] HTML files generated in `frontend/src/assets/reports/`
 - [ ] Commit was created automatically
 - [ ] Changes pushed to repository
 

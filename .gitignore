@@ -2,13 +2,14 @@
 
 # Compiled output
 /dist
-/docs
 /tmp
 /out-tsc
 /bazel-out
 
 # Node
 /node_modules
+/frontend/node_modules
+/backend/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -30,13 +31,22 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+/frontend/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
+/frontend/coverage
 /libpeerconnection.log
 testem.log
 /typings
+
+# Frontend build output
+/frontend/dist
+
+# Infra env files
+/infra/.env
+/infra/.env.local
+/infra/.env.prod
 
 # System files
 .DS_Store

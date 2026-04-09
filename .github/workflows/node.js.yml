@@ -32,19 +32,23 @@ jobs:
       with:
         node-version: '22.x'
         cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
         
     - name: Install dependencies
+      working-directory: ./frontend
       run: npm ci
       
     - name: Inject GA measurement ID (main repo only)
       env:
         GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
+      working-directory: ./frontend
       run: |
         if [ -n "$GA_MEASUREMENT_ID" ]; then
           perl -pi -e "s/__GA_MEASUREMENT_ID__/$GA_MEASUREMENT_ID/g" src/index.html
         fi
       
     - name: Build Angular application
+      working-directory: ./frontend
       run: npm run build
       
     - name: Setup Pages
@@ -53,7 +57,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './docs'
+        path: './frontend/dist'
 
   deploy:
     environment:

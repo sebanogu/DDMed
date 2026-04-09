@@ -58,7 +58,7 @@ This script will automatically:
 1. ✅ Download the latest SNOMED CT International version
 2. ✅ Locate required RF2 files
 3. ✅ Generate 3 reports (Excel + HTML)
-4. ✅ Save to `../src/assets/reports/`
+4. ✅ Save to `../frontend/src/assets/reports/`
 
 ### Run individual scripts
 
@@ -85,7 +85,7 @@ Reports are saved to two locations:
 - `fsn-changes.xlsx`
 - `list-new-concepts.xlsx`
 
-**HTML files** (`src/assets/reports/`):
+**HTML files** (`frontend/src/assets/reports/`):
 - `detect_inactivations_by_reason.html`
 - `fsn_changes_with_details.html`
 - `new_concepts_by_semantic_tag.html`

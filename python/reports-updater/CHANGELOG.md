@@ -36,7 +36,7 @@
 
 **New structure**:
 - ✅ Excel files → `python/output/` (local, Git-ignored)
-- ✅ HTML files → `src/assets/reports/` (web assets, Git-committed)
+- ✅ HTML files → `frontend/src/assets/reports/` (web assets, Git-committed)
 
 **Files modified**:
 - `run-reports.py` - Separate output directories
