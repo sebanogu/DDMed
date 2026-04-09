@@ -110,6 +110,15 @@ async function requirePermission(req, res, permission) {
     return null;
   }
 
+  if (auth.payload.activeTenant && auth.payload.activeTenant.tenantStatus !== 'active') {
+    sendJson(res, 403, {
+      error: 'tenant_inactive',
+      message: 'The active tenant must be active to access protected workspace resources.',
+      activeTenant: auth.payload.activeTenant,
+    });
+    return null;
+  }
+
   if (!auth.payload.effectivePermissions.includes(permission)) {
     sendJson(res, 403, {
       error: 'forbidden',

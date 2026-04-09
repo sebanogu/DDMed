@@ -71,6 +71,10 @@ export class BenefitsDemoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // Benefits Demo should default to the local FHIR server each time it opens.
+    // Persisted overrides are only applied when the user explicitly chooses one in settings.
+    this.fhirService.useDefaultBaseUrl({ persist: false });
+
     this.syncViewModeWithUrl();
 
     this.subscriptions.push(

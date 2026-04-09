@@ -37,17 +37,18 @@ export class AppComponent {
   selectedLanguageContext: any = null;
   selectedLanguageDisplayLabel = 'Language';
   fhirServers = [
-    { name: "SNOMED Dev IS", url: "https://dev-is-browser.ihtsdotools.org/fhir"},
-    { name: "SNOMED Public", url: "https://snowstorm.ihtsdotools.org/fhir"},
-    { name: "SNOMED Dev 2", url: "https://snowstorm-temp.kaicode.io/fhir"},
-    { name: "SNOMED Lite Demo", url: "https://implementation-demo.snomedtools.org/snowstorm-lite/fhir"},
-    { name: "LOINC Ontology Server", url: "https://browser.loincsnomed.org/fhir"},
-    { name: "Ontoserver", url: "https://r4.ontoserver.csiro.au/fhir"},
-    { name: "SNOMED Dev 1", url: "https://dev-browser.ihtsdotools.org/fhir"},
-    { name: "Implementation Demo", url: "https://implementation-demo.snomedtools.org/fhir"},
+    { name: "Local Snowstorm", url: "http://localhost:8082/fhir"},
+    // { name: "SNOMED Dev IS", url: "https://dev-is-browser.ihtsdotools.org/fhir"},
+    // { name: "SNOMED Public", url: "https://snowstorm.ihtsdotools.org/fhir"},
+    // { name: "SNOMED Dev 2", url: "https://snowstorm-temp.kaicode.io/fhir"},
+    // { name: "SNOMED Lite Demo", url: "https://implementation-demo.snomedtools.org/snowstorm-lite/fhir"},
+    // { name: "LOINC Ontology Server", url: "https://browser.loincsnomed.org/fhir"},
+    // { name: "Ontoserver", url: "https://r4.ontoserver.csiro.au/fhir"},
+    // { name: "SNOMED Dev 1", url: "https://dev-browser.ihtsdotools.org/fhir"},
+    // { name: "Implementation Demo", url: "https://implementation-demo.snomedtools.org/fhir"},
     // { name: "SNOMED International Next", url: "https://snomedbrowser.org/fhir"},
   ];
-  selectedServer = this.fhirServers[1];
+  selectedServer = this.fhirServers[0];
   embeddedMode: boolean = false;
   demos: any[] = [];
   session: SessionContext | null = null;
@@ -78,6 +79,13 @@ export class AppComponent {
         this.loadingModule = false;
       }
     });
+  }
+
+  private isLocalDevelopmentHost(): boolean {
+    if (typeof window === 'undefined' || !window.location?.hostname) {
+      return false;
+    }
+    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   }
 
   ngOnInit(): void {

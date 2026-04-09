@@ -1,7 +1,7 @@
 services:
   frontend:
     ports:
-      - "4200:4200"
+      - "4201:4200"
     volumes:
       - ../frontend:/app
       - frontend-node-modules:/app/node_modules
@@ -20,6 +20,9 @@ services:
       - "5432:5432"
 
   hapi-fhir:
+    ports: []
+
+  hapi-fhir-cors:
     ports:
       - "8081:8080"
 
@@ -28,8 +31,15 @@ services:
       - "9200:9200"
 
   snowstorm:
+    ports: []
+
+  snowstorm-cors:
     ports:
       - "8082:8080"
+
+  snowstorm-browser:
+    ports:
+      - "8083:80"
 
 volumes:
   frontend-node-modules:
