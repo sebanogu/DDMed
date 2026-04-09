@@ -1,0 +1,18 @@
+<section class="workspace-view">
+  <div class="eyebrow">Admin Permission</div>
+  <h1>Membership and invitation controls</h1>
+  <mat-card *ngIf="data">
+    <p>{{ data.message }}</p>
+    <h2>Allowed actions</h2>
+    <div class="chip-row">
+      <span class="chip" *ngFor="let action of data.actions">{{ action }}</span>
+    </div>
+
+    <h2>Invitations</h2>
+    <ul>
+      <li *ngFor="let invitation of data.invitations">
+        {{ invitation.email }} - {{ invitation.status }}
+      </li>
+    </ul>
+  </mat-card>
+</section>

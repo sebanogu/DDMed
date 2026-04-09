@@ -1,0 +1,51 @@
+.state-page {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #fdf8f2 0%, #f6efe6 100%);
+}
+
+mat-card {
+  width: min(620px, 100%);
+  padding: 20px;
+  border-radius: 18px;
+}
+
+.state-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9a3412;
+}
+
+.tenant-box {
+  display: grid;
+  gap: 4px;
+  margin: 18px 0;
+  padding: 14px;
+  border-radius: 12px;
+  background: #fff3e9;
+}
+
+.tenant-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.tenant-list button {
+  display: grid;
+  justify-items: start;
+  text-align: left;
+  padding: 12px;
+}
+
+.tenant-list small {
+  color: #6b7280;
+}
+
+.actions {
+  margin-top: 20px;
+}

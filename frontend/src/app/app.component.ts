@@ -12,6 +12,8 @@ import { CookieService } from './services/cookie.service';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
 import { catchError, of, skip, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { SessionContext } from './auth/models/auth.models';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -46,9 +48,11 @@ export class AppComponent {
     // { name: "Implementation Demo", url: "https://implementation-demo.snomedtools.org/fhir"},
     // { name: "SNOMED International Next", url: "https://snomedbrowser.org/fhir"},
   ];
-  selectedServer = this.isLocalDevelopmentHost() ? this.fhirServers[0] : this.fhirServers[2];
+  selectedServer = this.fhirServers[0];
   embeddedMode: boolean = false;
   demos: any[] = [];
+  session: SessionContext | null = null;
+  authInitialized = false;
 
   private updateCodeSystemOptionsTrigger$ = new Subject<string | undefined>();
 
@@ -63,7 +67,8 @@ export class AppComponent {
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private cookieService: CookieService,
-    private googleAnalyticsService: GoogleAnalyticsService) { 
+    private googleAnalyticsService: GoogleAnalyticsService,
+    public authService: AuthService) { 
     // Google Analytics tracking is now handled automatically by GoogleAnalyticsService
     // which intercepts router events in its constructor
 
@@ -76,14 +81,15 @@ export class AppComponent {
     });
   }
 
-  private isLocalDevelopmentHost(): boolean {
-    if (typeof window === 'undefined' || !window.location?.hostname) {
-      return false;
-    }
-    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  }
-
   ngOnInit(): void {
+    this.authService.session$.subscribe((session) => {
+      this.session = session;
+    });
+    this.authService.initialized$.subscribe((initialized) => {
+      this.authInitialized = initialized;
+    });
+    this.authService.bootstrapSession().subscribe();
+
     // Check embedded mode immediately from snapshot
     const params = this.activatedRoute.snapshot.queryParams;
     this.embeddedMode = params['embedded'] === 'true';
@@ -447,6 +453,31 @@ export class AppComponent {
         // User declined - redirect to SNOMED International website
         window.location.href = 'https://www.snomed.org';
       }
+    });
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+  navigateToWorkspace(): void {
+    this.router.navigate(['/workspace']);
+  }
+
+  switchTenant(tenantId: string): void {
+    this.authService.switchTenant(tenantId).subscribe((session) => {
+      this.session = session;
+      if (session.activeTenant?.tenantStatus === 'active') {
+        this.router.navigate(['/workspace']);
+      } else {
+        this.router.navigate(['/tenant-suspended']);
+      }
+    });
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/home']);
     });
   }
 
