@@ -34,6 +34,7 @@ import { SvDemoComponent } from './sv-demo/sv-demo.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+  { path: 't/:tenantSlug/login', component: LoginComponent, canActivate: [guestOnlyGuard] },
   { path: 'login', component: LoginComponent, canActivate: [guestOnlyGuard] },
   { path: 'access-denied', component: AccessDeniedComponent },
   { path: 'tenant-suspended', component: TenantSuspendedComponent, canActivate: [authGuard] },

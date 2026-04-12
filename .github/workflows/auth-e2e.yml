@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     container:
-      image: mcr.microsoft.com/playwright:v1.54.2-noble
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
     services:
       postgres:
         image: postgres:16
@@ -57,7 +57,7 @@ jobs:
         working-directory: ./frontend
         env:
           CI: true
-          DB_HOST: 127.0.0.1
+          DB_HOST: postgres
           DB_PORT: 5432
           DB_NAME: ddmed_auth_e2e
           DB_USER: postgres

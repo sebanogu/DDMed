@@ -1,5 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
+const backendPort = process.env.PLAYWRIGHT_BACKEND_PORT || '3000';
+const backendBaseUrl = `http://127.0.0.1:${backendPort}`;
+
 async function acceptLocalConsent(page: Page) {
   const baseURL = test.info().project.use.baseURL;
   if (!baseURL || typeof baseURL !== 'string') {
@@ -22,11 +25,14 @@ async function acceptLocalConsent(page: Page) {
 
 async function gotoApp(page: Page, path: string) {
   await acceptLocalConsent(page);
+  await page.addInitScript((configuredBackendBaseUrl) => {
+    window.localStorage.setItem('ddmed.backendBaseUrl', configuredBackendBaseUrl);
+  }, backendBaseUrl);
   await page.goto(path);
 }
 
-async function login(page: Page, email: string, password = 'Demo123!') {
-  await gotoApp(page, '/#/login');
+async function login(page: Page, email: string, password = 'Demo123!', tenantSlug = 'east-clinic') {
+  await gotoApp(page, `/#/t/${tenantSlug}/login`);
   await page.getByTestId('auth-login-email-input').fill(email);
   await page.getByTestId('auth-login-password-input').fill(password);
   await page.getByTestId('auth-login-submit').click();
@@ -37,6 +43,7 @@ test('redirects unauthenticated users to login and returns them to the requested
 
   await expect(page).toHaveURL(/#\/login\?redirect=%2Fworkspace%2Fadmin/);
   await expect(page.getByTestId('auth-login-page')).toBeVisible();
+  await page.getByTestId('auth-login-organization-input').fill('north-clinic');
 
   await page.getByTestId('auth-login-email-input').fill('alex.owner@ddmed.test');
   await page.getByTestId('auth-login-password-input').fill('Demo123!');
@@ -47,7 +54,7 @@ test('redirects unauthenticated users to login and returns them to the requested
 });
 
 test('restores the authenticated session after a page reload', async ({ page }) => {
-  await login(page, 'bianca.admin@ddmed.test');
+  await login(page, 'bianca.admin@ddmed.test', 'Demo123!', 'east-clinic');
 
   await expect(page).toHaveURL(/#\/workspace$/);
   await expect(page.getByTestId('workspace-dashboard-page')).toBeVisible();
@@ -62,7 +69,7 @@ test('restores the authenticated session after a page reload', async ({ page }) 
 });
 
 test('blocks suspended tenants and lets the user switch back to an active tenant', async ({ page }) => {
-  await login(page, 'alex.owner@ddmed.test');
+  await login(page, 'alex.owner@ddmed.test', 'Demo123!', 'north-clinic');
 
   await expect(page).toHaveURL(/#\/workspace$/);
   await page.getByRole('button', { name: 'North Clinic' }).click();
@@ -83,7 +90,7 @@ test('blocks suspended tenants and lets the user switch back to an active tenant
 });
 
 test('enforces RBAC for protected routes and workspace navigation', async ({ page }) => {
-  await login(page, 'sam.support@ddmed.test');
+  await login(page, 'sam.support@ddmed.test', 'Demo123!', 'east-clinic');
 
   await expect(page).toHaveURL(/#\/workspace$/);
   await expect(page.getByTestId('workspace-dashboard-page')).toBeVisible();
@@ -99,4 +106,25 @@ test('enforces RBAC for protected routes and workspace navigation', async ({ pag
   await expect(page).toHaveURL(/#\/access-denied\?permission=tenant\.manage&redirect=%2Fworkspace%2Fadmin/);
   await expect(page.getByTestId('auth-access-denied-page')).toBeVisible();
   await expect(page.getByTestId('auth-access-denied-permission')).toContainText('tenant.manage');
+});
+
+test('authenticates users inside the tenant URL', async ({ page }) => {
+  await gotoApp(page, '/#/t/north-clinic/login');
+  await expect(page.getByTestId('auth-login-tenant-name')).toHaveText('North Clinic');
+
+  await page.getByTestId('auth-login-email-input').fill('alex.owner@ddmed.test');
+  await page.getByTestId('auth-login-password-input').fill('Demo123!');
+  await page.getByTestId('auth-login-submit').click();
+
+  await expect(page).toHaveURL(/#\/workspace$/);
+  await expect(page.getByTestId('workspace-active-tenant-name')).toHaveText('North Clinic');
+});
+
+test('rejects valid credentials when the user does not belong to the tenant in the URL', async ({ page }) => {
+  await gotoApp(page, '/#/t/east-clinic/login');
+  await page.getByTestId('auth-login-email-input').fill('alex.owner@ddmed.test');
+  await page.getByTestId('auth-login-password-input').fill('Demo123!');
+  await page.getByTestId('auth-login-submit').click();
+
+  await expect(page.getByTestId('auth-login-error')).toHaveText('The authenticated user does not belong to the requested tenant.');
 });

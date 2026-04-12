@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { getBackendBaseUrl } from '../auth-api-base';
-import { AuthResponse, SessionContext, SessionResponse } from '../models/auth.models';
+import { AuthResponse, PublicTenant, PublicTenantResponse, SessionContext, SessionResponse } from '../models/auth.models';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +40,11 @@ export class AuthService {
     );
   }
 
-  login(email: string, password: string, tenantId?: string): Observable<SessionContext> {
+  login(email: string, password: string, tenantSlug: string): Observable<SessionContext> {
     return this.http.post<AuthResponse>(`${this.backendBaseUrl}/api/auth/login`, {
       email,
       password,
-      tenantId: tenantId || null,
+      tenantSlug,
     }).pipe(
       tap((response) => {
         localStorage.setItem(this.tokenStorageKey, response.token);
@@ -52,6 +52,12 @@ export class AuthService {
         this.initializedSubject.next(true);
       }),
       map((response) => response.session)
+    );
+  }
+
+  getPublicTenant(tenantSlug: string): Observable<PublicTenant> {
+    return this.http.get<PublicTenantResponse>(`${this.backendBaseUrl}/api/public/tenants/${encodeURIComponent(tenantSlug)}`).pipe(
+      map((response) => response.tenant)
     );
   }
 

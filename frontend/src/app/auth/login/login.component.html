@@ -3,10 +3,23 @@
     <div class="eyebrow">Tenant-Aware Authentication</div>
     <h1>Sign in</h1>
     <p class="auth-copy">
-      This demo session model supports multiple tenants and multiple roles per user.
+      @if (tenant) {
+        Sign in to <strong data-testid="auth-login-tenant-name">{{ tenant.name }}</strong>.
+      } @else {
+        This tenant-aware sign-in flow scopes authentication to the organization in the URL.
+      }
     </p>
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form" data-testid="auth-login-form">
+      <mat-form-field *ngIf="!resolvedTenantSlug" appearance="outline" data-testid="auth-login-organization-field">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organization" autocomplete="organization" data-testid="auth-login-organization-input">
+        <mat-hint>Use the tenant slug, for example <code>north-clinic</code>.</mat-hint>
+        <mat-error *ngIf="form.controls.organization.touched && !form.controls.organization.value">
+          Organization is required.
+        </mat-error>
+      </mat-form-field>
+
       <mat-form-field appearance="outline" data-testid="auth-login-email-field">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" type="email" autocomplete="username" data-testid="auth-login-email-input">
@@ -33,7 +46,7 @@
 
   <mat-card class="demo-card" data-testid="auth-demo-users">
     <h2>Demo accounts</h2>
-    <p>Use one of these users to exercise multi-role RBAC and tenant switching.</p>
+    <p>Use one of these users to exercise tenant-scoped login, multi-role RBAC, and tenant switching.</p>
 
     <div class="demo-users" data-testid="auth-demo-users-list">
       <button
