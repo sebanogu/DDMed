@@ -9,6 +9,7 @@ function mapMembershipRows(rows) {
     if (!membershipsByTenant.has(row.tenant_id)) {
       membershipsByTenant.set(row.tenant_id, {
         tenantId: row.tenant_id,
+        tenantSlug: row.tenant_slug,
         tenantName: row.tenant_name,
         tenantStatus: row.tenant_status,
         roles: [],
@@ -40,9 +41,40 @@ async function ensureSchema() {
   await query(`
     CREATE TABLE IF NOT EXISTS auth_tenants (
       id TEXT PRIMARY KEY,
+      slug TEXT UNIQUE,
       name TEXT NOT NULL,
       status TEXT NOT NULL CHECK (status IN ('trial', 'active', 'suspended', 'cancelled'))
     );
+  `);
+
+  await query(`
+    ALTER TABLE auth_tenants
+    ADD COLUMN IF NOT EXISTS slug TEXT
+  `);
+
+  await query(`
+    UPDATE auth_tenants
+    SET slug = LOWER(REGEXP_REPLACE(name, '[^a-zA-Z0-9]+', '-', 'g'))
+    WHERE slug IS NULL OR BTRIM(slug) = ''
+  `);
+
+  await query(`
+    ALTER TABLE auth_tenants
+    ALTER COLUMN slug SET NOT NULL
+  `);
+
+  await query(`
+    DO $$
+    BEGIN
+      IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conname = 'auth_tenants_slug_key'
+      ) THEN
+        ALTER TABLE auth_tenants
+        ADD CONSTRAINT auth_tenants_slug_key UNIQUE (slug);
+      END IF;
+    END $$;
   `);
 
   await query(`
@@ -108,18 +140,19 @@ async function seedDemoData() {
   ];
 
   const tenants = [
-    { id: 'tenant-north', name: 'North Clinic', status: 'active' },
-    { id: 'tenant-south', name: 'South Clinic', status: 'suspended' },
-    { id: 'tenant-east', name: 'East Clinic', status: 'active' },
+    { id: 'tenant-north', slug: 'north-clinic', name: 'North Clinic', status: 'active' },
+    { id: 'tenant-south', slug: 'south-clinic', name: 'South Clinic', status: 'suspended' },
+    { id: 'tenant-east', slug: 'east-clinic', name: 'East Clinic', status: 'active' },
   ];
 
   await withTransaction(async (client) => {
     for (const tenant of tenants) {
       await client.query(
-        `INSERT INTO auth_tenants (id, name, status)
-         VALUES ($1, $2, $3)
-         ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, status = EXCLUDED.status`,
-        [tenant.id, tenant.name, tenant.status]
+        `INSERT INTO auth_tenants (id, slug, name, status)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (id) DO UPDATE
+         SET slug = EXCLUDED.slug, name = EXCLUDED.name, status = EXCLUDED.status`,
+        [tenant.id, tenant.slug, tenant.name, tenant.status]
       );
     }
 
@@ -186,6 +219,7 @@ async function getUserMemberships(userId) {
   const result = await query(
     `SELECT
        t.id AS tenant_id,
+       t.slug AS tenant_slug,
        t.name AS tenant_name,
        t.status AS tenant_status,
        r.role_name
@@ -198,6 +232,17 @@ async function getUserMemberships(userId) {
   );
 
   return mapMembershipRows(result.rows);
+}
+
+async function findTenantBySlug(slug) {
+  const result = await query(
+    `SELECT id, slug, name, status
+     FROM auth_tenants
+     WHERE LOWER(slug) = LOWER($1)`,
+    [slug]
+  );
+
+  return result.rows[0] || null;
 }
 
 async function createSession(userId, activeTenantId) {
@@ -238,6 +283,7 @@ module.exports = {
   seedDemoData,
   findUserByCredentials,
   findUserById,
+  findTenantBySlug,
   getUserMemberships,
   createSession,
   getSession,

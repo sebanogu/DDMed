@@ -1,5 +1,6 @@
 export interface TenantMembership {
   tenantId: string;
+  tenantSlug: string;
   tenantName: string;
   tenantStatus: 'active' | 'suspended' | 'trial' | 'cancelled' | string;
   roles: string[];
@@ -8,8 +9,16 @@ export interface TenantMembership {
 
 export interface ActiveTenantContext {
   tenantId: string;
+  tenantSlug: string;
   tenantName: string;
   tenantStatus: TenantMembership['tenantStatus'];
+}
+
+export interface PublicTenant {
+  id: string;
+  slug: string;
+  name: string;
+  status: TenantMembership['tenantStatus'];
 }
 
 export interface SessionUser {
@@ -34,6 +43,10 @@ export interface AuthResponse {
 
 export interface SessionResponse {
   session: SessionContext;
+}
+
+export interface PublicTenantResponse {
+  tenant: PublicTenant;
 }
 
 export interface WorkspaceSummary {

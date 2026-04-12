@@ -4,6 +4,7 @@ const {
   seedDemoData,
   findUserByCredentials,
   findUserById,
+  findTenantBySlug,
   getUserMemberships,
   createSession,
   getSession,
@@ -11,6 +12,7 @@ const {
   deleteSession,
   clearDemoSessions,
 } = require('./auth-repository');
+const { evaluateTenantScopedLogin, normalizeTenantSlug } = require('./auth-login');
 const { rolePermissions } = require('./permissions');
 
 const port = process.env.PORT || 3000;
@@ -70,6 +72,7 @@ async function buildSessionPayload(user, activeTenantId) {
     activeTenant: activeMembership
       ? {
           tenantId: activeMembership.tenantId,
+          tenantSlug: activeMembership.tenantSlug,
           tenantName: activeMembership.tenantName,
           tenantStatus: activeMembership.tenantStatus,
         }
@@ -144,7 +147,16 @@ async function handleLogin(req, res) {
 
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
   const password = typeof body.password === 'string' ? body.password : '';
-  const preferredTenantId = typeof body.tenantId === 'string' ? body.tenantId : null;
+  const tenantSlug = normalizeTenantSlug(body.tenantSlug);
+  if (!tenantSlug) {
+    sendJson(res, 400, {
+      error: 'tenant_required',
+      message: 'A tenant slug is required to sign in.',
+    });
+    return;
+  }
+
+  const tenant = await findTenantBySlug(tenantSlug);
   const user = await findUserByCredentials(email, password);
 
   if (!user) {
@@ -153,14 +165,17 @@ async function handleLogin(req, res) {
   }
 
   const memberships = await getUserMemberships(user.id);
-  const defaultTenant =
-    memberships.find((membership) => membership.tenantId === preferredTenantId)
-    || memberships.find((membership) => membership.tenantStatus === 'active')
-    || memberships[0]
-    || null;
+  const tenantScopedLogin = evaluateTenantScopedLogin({ tenant, memberships });
+  if (!tenantScopedLogin.ok) {
+    sendJson(res, tenantScopedLogin.statusCode, {
+      error: tenantScopedLogin.error,
+      message: tenantScopedLogin.message,
+    });
+    return;
+  }
 
-  const token = await createSession(user.id, defaultTenant ? defaultTenant.tenantId : null);
-  const session = await buildSessionPayload(user, defaultTenant ? defaultTenant.tenantId : null);
+  const token = await createSession(user.id, tenantScopedLogin.membership.tenantId);
+  const session = await buildSessionPayload(user, tenantScopedLogin.membership.tenantId);
 
   sendJson(res, 200, {
     token,
@@ -224,7 +239,14 @@ async function handleLogout(req, res) {
   });
 }
 
+function parseRequestUrl(req) {
+  return new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+}
+
 async function handleRequest(req, res) {
+  const requestUrl = parseRequestUrl(req);
+  const { pathname } = requestUrl;
+
   if (req.method === 'OPTIONS') {
     setCorsHeaders(res);
     res.writeHead(204);
@@ -232,7 +254,7 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.url === '/health') {
+  if (pathname === '/health') {
     sendJson(res, 200, {
       status: 'ok',
       service: 'ddmed-backend',
@@ -241,12 +263,35 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/auth/login') {
+  if (req.method === 'GET' && pathname.startsWith('/api/public/tenants/')) {
+    const tenantSlug = normalizeTenantSlug(decodeURIComponent(pathname.slice('/api/public/tenants/'.length)));
+    const tenant = tenantSlug ? await findTenantBySlug(tenantSlug) : null;
+
+    if (!tenant) {
+      sendJson(res, 404, {
+        error: 'tenant_not_found',
+        message: 'The requested tenant does not exist.',
+      });
+      return;
+    }
+
+    sendJson(res, 200, {
+      tenant: {
+        id: tenant.id,
+        slug: tenant.slug,
+        name: tenant.name,
+        status: tenant.status,
+      },
+    });
+    return;
+  }
+
+  if (req.method === 'POST' && pathname === '/api/auth/login') {
     await handleLogin(req, res);
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/auth/session') {
+  if (req.method === 'GET' && pathname === '/api/auth/session') {
     const auth = await authenticate(req, res);
     if (!auth) {
       return;
@@ -255,17 +300,17 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/auth/switch-tenant') {
+  if (req.method === 'POST' && pathname === '/api/auth/switch-tenant') {
     await handleSwitchTenant(req, res);
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/auth/logout') {
+  if (req.method === 'POST' && pathname === '/api/auth/logout') {
     await handleLogout(req, res);
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/auth/permission-matrix') {
+  if (req.method === 'GET' && pathname === '/api/auth/permission-matrix') {
     const auth = await authenticate(req, res);
     if (!auth) {
       return;
@@ -275,7 +320,7 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/workspace/summary') {
+  if (req.method === 'GET' && pathname === '/api/workspace/summary') {
     const auth = await requirePermission(req, res, 'workspace.view');
     if (!auth) {
       return;
@@ -295,7 +340,7 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/workspace/admin') {
+  if (req.method === 'GET' && pathname === '/api/workspace/admin') {
     const auth = await requirePermission(req, res, 'tenant.manage');
     if (!auth) {
       return;
@@ -316,7 +361,7 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/workspace/clinical') {
+  if (req.method === 'GET' && pathname === '/api/workspace/clinical') {
     const auth = await requirePermission(req, res, 'clinical.read');
     if (!auth) {
       return;
@@ -336,7 +381,7 @@ async function handleRequest(req, res) {
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/api/workspace/support') {
+  if (req.method === 'GET' && pathname === '/api/workspace/support') {
     const auth = await requirePermission(req, res, 'support.access');
     if (!auth) {
       return;
