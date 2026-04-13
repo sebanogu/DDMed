@@ -2,7 +2,7 @@
   <div class="loading-panel">
     <div class="loading-content">
       <div class="loading-spinner"></div>
-      <h2>Loading SNOMED integrations information</h2>
+      <h2>Loading interoperability landscape</h2>
       <p>Please wait while we prepare the diagram...</p>
     </div>
   </div>
@@ -87,7 +87,7 @@
             }
           </div>
           <div class="center-column" #centerColumn>
-            <img src="assets/img/S-Logo-2.png" alt="SNOMED International" class="logo" />
+            <img src="assets/img/ddmed-hub-logo.svg" alt="DDMed interop hub" class="logo" />
             <div class="link-container">
               <div class="autocomplete-wrapper">
                 <app-autocomplete-binding
@@ -111,7 +111,7 @@
             }
             @if (!examplesSource && !resultsNarrative) {
               <div class="center-message">
-                SNOMED International acts as a central hub for semantic interoperability across international health information standards
+                DDMed Interop Hub highlights how terminology assets connect across standards, classifications and implementation targets
               </div>
             }
             @if (resultsNarrative && !searching) {

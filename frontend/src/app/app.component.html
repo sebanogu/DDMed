@@ -65,11 +65,15 @@
       <button mat-icon-button (click)="drawer.toggle()" id="menu-button">
         <mat-icon>menu</mat-icon>
       </button>
-      <a href="javascript:void(0)" (click)="navigate({url: 'home', type: 'internal'})"><img src="assets/img/small_logo.png" id="logo"></a>
-      <span id="title">SNOMED CT Implementation Demos</span>
-      <span id="short-title">Implementation Demos</span>
+      <a href="javascript:void(0)" (click)="navigate({url: 'home', type: 'internal'})" class="brand-link">
+        <img src="assets/img/ddmed-mark.svg" id="logo" alt="DDMed logo">
+      </a>
+      <div class="brand-copy">
+        <span id="title">DDMed Clinical Studio</span>
+        <span id="short-title">DDMed Studio</span>
+      </div>
       <span class="example-spacer"></span>
-      <button mat-flat-button color="accent" [matMenuTriggerFor]="demosMenu" class="bar-button">Select Demonstrator</button>
+      <button mat-flat-button color="accent" [matMenuTriggerFor]="demosMenu" class="bar-button">Explore Modules</button>
       <mat-menu #demosMenu="matMenu" class="wide-menu">
         @for (demo of demos; track demo) {
           <button mat-menu-item (click)="navigate(demo)">{{demo.name}}</button>
@@ -138,9 +142,9 @@
           <button mat-menu-item (click)="setContext(context)">{{context.name}}</button>
         }
       </mat-menu>
-      <a mat-flat-button href="https://github.com/IHTSDO/sct-implementation-demonstrator" target="_blank" color="primary" id="info-button">
-        <mat-icon>info</mat-icon>
-      </a>
+      <button mat-stroked-button color="primary" id="info-button" (click)="navigate({url: 'home', type: 'internal'})">
+        <mat-icon>home</mat-icon>
+      </button>
       @if (session) {
         <button mat-flat-button color="accent" [matMenuTriggerFor]="tenantMenu" class="bar-button auth-button">
           {{ session.activeTenant?.tenantName || 'No Tenant' }}

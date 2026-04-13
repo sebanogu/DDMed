@@ -1273,7 +1273,7 @@ export class ValuesetTranslatorComponent implements OnInit, OnDestroy, AfterView
         description: `${this.valueSetName} FHIR package`,
         fhirVersion: '4.0.1',
         dependencies: {},
-        author: 'SCT Implementation Demonstrator',
+        author: 'DDMed Clinical Studio',
         url: baseUri,
         resources: [
           { type: 'CodeSystem', reference: `CodeSystem/${codeSystem.name}` },

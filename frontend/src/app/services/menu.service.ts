@@ -7,25 +7,25 @@ export class MenuService {
 
   demos = [
     { 
-      name: "Encounters UI Demo",
+      name: "Encounters UI Sandbox",
       subtitle: "Clinical demo",
       type: "external", 
       url: "https://ihtsdo.github.io/snomed-ui-examples",
-      description: "A simulation of clinical data entry for clinial encounters SNOMED FHIR Terminology services. The classic SNOMED UI Demo."
+      description: "A compact encounter-entry sandbox showing coded capture patterns against FHIR terminology services."
     },
     {
-      name: "SNOMED EHR Lab",
+      name: "DDMed Care Lab",
       subtitle: "Clinical demo",
       type: "internal",
       url: "/ehr-lab",
-      description: "A complete EHR simulation with generated persistent patients, clinical, dental, and nursing records, AI-assisted entry, CDS, analytics, interoperability tools, and Smart Health Links powered by FHIR and SNOMED CT."
+      description: "A full clinical workspace with persistent patients, AI-assisted entry, analytics, interoperability tooling and Smart Health Links, built around reusable FHIR workflows."
     },
     { 
       name: "Allergies",
       subtitle: "Clinical demo",
       type: "internal", 
       url: "/allergies",
-      description: "A SNOMED / FHIR implementation demo of recording Allergy / Intollerance details, from Allergies Clinical Reference Group"
+      description: "A focused workflow for recording allergies and intolerances using reusable FHIR patterns and terminology bindings."
     },
     { 
       name: "LOINC & SNOMED CT",
@@ -42,137 +42,137 @@ export class MenuService {
       description: "A clinical demonstration of the NCPT (Nutrition Care Process Terminology) reference set."
     },
     { 
-      name: "Implementation Maturity Framework",
+      name: "Adoption Maturity Framework",
       subtitle: "Tool",
       type: "internal", 
       url: "/maturity",
-      description: "An online maturity assessment tool and an dashboard for compiling and analyzing collections of maturity results."
+      description: "An assessment workspace for measuring terminology adoption maturity across organizations, programs and products."
     },
     { 
-      name: "Terminology Bindings Sandbox", 
+      name: "Terminology Bindings Studio", 
       subtitle: "Learning demo",
       type: "internal", 
       url: "/sandbox",
-      description: "A sandbox for learning and testing terminology bindings"
+      description: "A practical environment for learning, testing and reviewing terminology binding strategies."
     },
     { 
-      name: "SNOMED Maps Demonstrator",
+      name: "Terminology Maps Explorer",
       subtitle: "Learning demo",
       type: "external", 
       url: "https://ihtsdo.github.io/iid-icd-maps",
-      description: "A SNOMED / ICD-10 maps demonstration, including complex map rules execution", 
+      description: "An external explorer for terminology map execution, including rule-based ICD-10 mapping scenarios.", 
     },
     { 
-      name: "Post-coordination Demonstrator",
+      name: "Post-coordination Explorer",
       subtitle: "Learning demo",
       type: "external", 
       url: "https://ihtsdo.github.io/iid-postcoordination",
-      description: "A SNOMED post-coordination demonstration, with new prototype Postcoordination Terminology server SNOWSTORM X",
+      description: "An external explorer for post-coordination workflows backed by a prototype terminology service.",
     },
     { 
-      name: "IPS Terminology Demonstrator",
+      name: "IPS Terminology Explorer",
       subtitle: "Learning demo",
       type: "external", 
       url: "https://ihtsdo.github.io/iid-ips/",
-      description: "A demonstration of the International Patient Summary (IPS) terminology, including the IPS SNOMED CT refset",
+      description: "An external explorer for International Patient Summary terminology assets and reusable reference sets.",
     },
     { 
-      name: "SNOMED & FHIR Questionnaires Manager Application",
+      name: "FHIR Questionnaire Manager",
       subtitle: "Tool",
       type: "internal", 
       url: "/questionnaires",
-      description: "An application to manage a FHIR Questionnaires repository, with SNOMED CT bindings",
+      description: "A workspace for managing FHIR questionnaire repositories with terminology-aware bindings.",
     },
-    { name: "SNOMED & FHIR Questionnaires Utilities",
+    { name: "FHIR Questionnaire Utilities",
       subtitle: "Tool",
       type: "internal", 
       url: "/questionnaires", 
       queryParams: { utility: true },
-      description: "Utilities for working with FHIR Questionnaires, including SNOMED CT bindings"
+      description: "Utilities for authoring, reviewing and transforming FHIR questionnaires with coded inputs."
     },
     { 
       name: "Context Representation Transformations",
       subtitle: "Learning demo",
       type: "internal", 
       url: "/context",
-      description: "A demonstration of the transformation of context representations from SNOMED to FHIR Resources"
+      description: "A workspace for exploring how contextual clinical meaning can be transformed into FHIR resources."
     },
     { 
-      name: "SNOMED and LLMs (AI Demo)",
+      name: "Clinical Terminology and LLMs",
       subtitle: "Learning demo",
       type: "external", 
       url: "https://ihtsdo.github.io/openai-demo/",
-      description: "This demo uses OpenAI ChatGPT API to demonstrate the use of SNOMED CT with Language Model Models (LLMs). A developer key for the OpenAI API is required."
+      description: "An external AI-oriented demo showing how clinical terminology can support language model workflows. An OpenAI API key is required."
     },
     { 
       name: "Snoguess (A SNOMED game)",
       subtitle: "Game",
       type: "internal", 
       url: "/snoguess",
-      description: "A SNOMED term guessing game, learn about SNOMED content while having fun and competing to achieve the highest score"
+      description: "A terminology guessing game for learning coded clinical content while competing for high scores."
     },
     {
-      name: "SNOMED Implementation Roadmap Generator",
+      name: "Implementation Roadmap Generator",
       subtitle: "Tool",
       type: "external",
       url: "https://ihtsdo.github.io/roadmap-generator",
-      description: "A tool designed to promote and support the creation of implementation roadmaps for the adoption of SNOMED CT in countries, regions or organizations."
+      description: "A planning tool for structuring phased terminology adoption roadmaps across organizations and jurisdictions."
     },
     {
-      name: "SNOMED CT as an Evolving Terminology",
+      name: "Terminology Change Intelligence",
       subtitle: "Learning demo",
       type: "internal",
       url: "/reports",
-      description: "A collection of educational material and changes reports to understand how SNOMED changes on each realease and help plan implementations accordingly."
+      description: "Reports and guidance for understanding release-to-release terminology change and planning downstream updates."
     },
     {
       name: "Descriptive analytics demo",
       subtitle: "Analytics demo",
       type: "internal",
       url: "/descriptive-analytics",
-      description: "A demo of descriptive analytics for SNOMED CT, including a treemap visualization with nested boxes for hierarchical data exploration."
+      description: "A descriptive analytics workspace with treemap-based exploration of coded clinical data."
     },
     {
-      name: "SNOMED Integrations Hub",
+      name: "DDMed Interop Hub",
       subtitle: "Learning demo",
       type: "internal",
       url: "/snomed-integrations",
-      description: "A demonstration of SNOMED CT integrations with live data. Navigate the integrations hub to explore the different integrations with other classifications, terminologies, and code systems."
+      description: "A live interop map for exploring relationships between clinical terminology assets, classifications and code systems."
     },
     {
       name: "ValueSet Utility",
       subtitle: "Tool",
       type: "internal",
       url: "/valueset-translator",
-      description: "An utility for transforming SNOMED CT value sets from non-standard formats (Excel, CSV, Snap2SNOMED maps) into standards-compliant FHIR ValueSet resources and packages."
+      description: "A utility for transforming terminology value sets from spreadsheets and mapping exports into standards-compliant FHIR ValueSet packages."
     },
     {
       name: "Analytics with Snolytical",
       subtitle: "Analytics demo",
       type: "external",
       url: "https://training-snolytical.ihtsdotools.org/",
-      description: "A health data analytics demonstrator leveraging the SNOMED CT hierarchy. The demo shows how clinicians can get hand-on and engage with their SNOMED coded data directly, by building and running their own basic data-science reports. "
+      description: "An external analytics demonstrator for exploring coded health data directly through clinician-friendly reporting workflows."
     },
     {
       name: "Module Dependency Reference Set Viewer",
       subtitle: "Learning demo",
       type: "internal",
       url: "/mdrs-viewer",
-      description: "A graphical viewer for the Module Dependency Reference Set (MDRS) that displays dependencies between SNOMED CT modules, showing which module versions depend on which other module versions."
+      description: "A graphical viewer for module dependency relationships across terminology releases and extensions."
     },
     {
       name: "Drug Strength Rounding Rules",
       subtitle: "Learning demo",
       type: "internal",
       url: "/drug-strength-rounding",
-      description: "A demonstration of drug strength rounding rules for significant figures in pharmaceutical calculations"
+      description: "A focused module for exploring drug-strength rounding rules and significant-figure calculations."
     },
     {
       name: "Medicinal Product Classes",
       subtitle: "Learning demo",
       type: "internal",
       url: "/medicinal-product-classes",
-      description: "A terminology bindings demonstrator for medicinal product, clinical drug, and packaged clinical drug classes using reusable coding spec tabs."
+      description: "A terminology bindings workspace for medicinal product, clinical drug and packaged clinical drug classes."
     }
 
   ];

@@ -207,8 +207,8 @@
 }
 
 .welcome-snomed-logo {
-  height: 64px;
-  width: auto;
+  height: 72px;
+  width: min(280px, 100%);
   object-fit: contain;
 }
 

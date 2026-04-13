@@ -115,13 +115,13 @@
     }
     @if (gameState.state === 'menu' && !chooseDifficulty && !showInstructions && !loadingAssets) {
       <div class="flex flex-col items-center gap-4">
-        <img src="assets/img/SI_CT_w_tagline.png" alt="SNOMED CT Logo" class="w-1/6">
+        <img src="assets/img/ddmed-lockup.svg" alt="DDMed logo" class="w-1/4">
         <img src="assets/img/snoguess-logo.png" alt="Game Logo" class="w-1/3 mt-8" [@popIn]>
         <p class="text-center font-light text-lg">
           <b>Welcome to SnoGuess!</b>
         </p>
         <p class="text-center font-light text-lg">
-          A fun way to learn about SNOMED CT concepts and their definitions.
+          A playful way to learn coded clinical concepts and their definitions.
         </p>
         <div (click)="chooseDifficultyLevel()" [@scrollUp]
     class="menu-buttons bg-gradient-to-b from-blue-500 to-gray-500 hover:from-black hover:to-blue-500 border-solid border-4 border-black 
@@ -157,7 +157,7 @@
     }
     @if (gameState.state === 'menu' && chooseDifficulty && !showInstructions && !loadingAssets) {
       <div class="flex flex-col items-center gap-4">
-        <img src="assets/img/SI_CT_w_tagline.png" alt="SNOMED CT Logo" class="w-1/6">
+        <img src="assets/img/ddmed-lockup.svg" alt="DDMed logo" class="w-1/4">
         <img src="assets/img/difficulty.png" alt="Game Logo" class="w-1/4 mt-8" [@popIn]>
         <p class="text-center font-light text-lg">
           <b>Choose the game difficulty</b>
@@ -189,7 +189,7 @@
     }
     @if (showInstructions) {
       <div class="flex flex-col items-center gap-4">
-        <img src="assets/img/SI_CT_w_tagline.png" alt="SNOMED CT Logo" class="w-1/6">
+        <img src="assets/img/ddmed-lockup.svg" alt="DDMed logo" class="w-1/4">
         <img src="assets/img/instructions.png" alt="Game Logo" class="w-1/4 mt-8 mb-12" [@popIn]>
         <ul class="text-left instructions-text">
           <li class="flex flex-row items-center gap-2">
@@ -243,7 +243,7 @@
     }
     @if (gameState.state === 'gameOver') {
       <div class="flex flex-col items-center gap-4">
-        <img src="assets/img/SI_CT_w_tagline.png" alt="SNOMED CT Logo" class="w-1/6">
+        <img src="assets/img/ddmed-lockup.svg" alt="DDMed logo" class="w-1/4">
         <img src="assets/img/game-over.png" alt="Game Logo" class="w-1/4 mt-8" [@popIn]>
         <div class="text-xl text-pretty text-center">
           <div> The term was: </div>
@@ -303,7 +303,7 @@
     }
     @if (gameState.state == 'won') {
       <div class="flex flex-col items-center gap-4">
-        <img src="assets/img/SI_CT_w_tagline.png" alt="SNOMED CT Logo" class="w-1/6">
+        <img src="assets/img/ddmed-lockup.svg" alt="DDMed logo" class="w-1/4">
         <img src="assets/img/congratulations.png" alt="Game Logo" class="w-1/3 mt-8" [@popIn]>
         <div class="">
           <mat-icon class="large-icon diamond shadow-local">grade</mat-icon>
@@ -359,7 +359,7 @@
   </div>
 }
 <div class="text-center mt-8 mb-4">
-  Copyright © {{ currentYear | date:'yyyy' }} SNOMED International
+  Copyright © {{ currentYear | date:'yyyy' }} DDMed
 </div>
 <app-add-to-home></app-add-to-home>
 

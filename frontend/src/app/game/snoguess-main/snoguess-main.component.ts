@@ -122,7 +122,7 @@ export class SnoguessMainComponent implements OnInit {
     });
 
     const imageUrls = [
-      'assets/img/SI_CT_w_tagline.png',
+      'assets/img/ddmed-lockup.svg',
       'assets/img/snoguess-logo.png',
       'assets/img/congratulations.png',
       'assets/img/correct.png',
