@@ -1,18 +1,27 @@
 <div class="main-panel">
-  <h1>SNOMED CT Implementation Demonstrators</h1>
-  <p class="intro">Welcome to our collection of SNOMED CT Implementation Demonstrators!
-    This curated selection of demos showcases the diverse ways SNOMED CT can be implemented across different use cases.
-    Each demonstration is <a href="https://github.com/IHTSDO/sct-implementation-demonstrator" target="_blank" (click)="trackExternalLinkClick('https://github.com/IHTSDO/sct-implementation-demonstrator', 'GitHub Repository', $event)">open source</a>,
-    free to explore, and easy to replicate, providing a hands-on learning experience for
-  developers, implementers, and healthcare professionals.</p>
-  <p class="intro">These implementation demos have been created through the collaboration and expertise of the
-    <a href="https://confluence.ihtsdotools.org/display/CP/Clinical+Engagement" target="_blank" (click)="trackExternalLinkClick('https://confluence.ihtsdotools.org/display/CP/Clinical+Engagement', 'SNOMED CT Community', $event)">global SNOMED CT community of clinical experts</a>,
-    reflecting best practices and innovative use cases. Whether you're just getting started with SNOMED CT or looking to deepen
-  your understanding, you'll find valuable insights here. Explore, learn, and join us in advancing healthcare interoperability.</p>
+  <section class="hero-panel">
+    <div class="hero-copy">
+      <span class="hero-eyebrow">DDMed Platform</span>
+      <h1>Clinical workflows, terminology tooling and interoperability in one studio</h1>
+      <p class="intro">
+        DDMed Clinical Studio is a modular workspace for teams building computable healthcare products. It brings
+        together clinical data entry, terminology operations, analytics, questionnaires and exchange scenarios in a
+        single product surface designed for implementation work rather than screenshots.
+      </p>
+      <p class="intro">
+        The modules below remain transparent and reusable, but the experience is now framed as a cohesive product:
+        a practical environment for architects, implementers, clinicians and informatics teams working with FHIR,
+        SNOMED CT, LOINC and related standards.
+      </p>
+    </div>
+    <div class="hero-art">
+      <img src="assets/img/ddmed-lockup.svg" alt="DDMed Clinical Studio">
+    </div>
+  </section>
 
   <!-- Filter Row -->
   <div class="filter-panel">
-    <span class="demo-count">{{ getFilteredCount() }} {{ getFilteredCount() === 1 ? 'demo' : 'demos' }} shown</span>
+    <span class="demo-count">{{ getFilteredCount() }} {{ getFilteredCount() === 1 ? 'module' : 'modules' }} shown</span>
     <div class="badge-container">
       @for (subtype of uniqueSubtypes; track subtype) {
         <span
@@ -28,11 +37,11 @@
         mat-button
         class="clear-filters-btn"
         (click)="clearFilters()">
-        Remove filters
+        Reset filters
       </button>
     }
     <mat-form-field class="search-field" appearance="fill">
-      <input matInput [(ngModel)]="searchText" (input)="onSearchChange()" placeholder="Type to filter...">
+      <input matInput [(ngModel)]="searchText" (input)="onSearchChange()" placeholder="Search modules, capabilities or domains...">
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
   </div>
@@ -49,13 +58,13 @@
             <p>{{ demo.description }}</p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button color="accent" (click)="navigate(demo)">OPEN</button>
+            <button mat-button color="accent" (click)="navigate(demo)">Open module</button>
           </mat-card-actions>
         </mat-card>
       </div>
     }
   </div>
   <div class="center-image">
-    <img src="assets/img/SI_CT_Logo_Delivered_By.png" alt="SNOMED Logo" class="transparent-image">
+    <img src="assets/img/ddmed-lockup.svg" alt="DDMed Clinical Studio" class="transparent-image">
   </div>
 </div>

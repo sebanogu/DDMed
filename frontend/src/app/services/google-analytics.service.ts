@@ -287,8 +287,8 @@ export class GoogleAnalyticsService {
 
     // Update HTML title (always, even in development)
     const fullTitle = pageTitle === 'Home' 
-      ? 'Implementation Demos' 
-      : `${pageTitle} - Implementation Demos`;
+      ? 'DDMed Clinical Studio' 
+      : `${pageTitle} - DDMed Clinical Studio`;
     this.titleService.setTitle(fullTitle);
 
     // Check if we should track (includes debug override)

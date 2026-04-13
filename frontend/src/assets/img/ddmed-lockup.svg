@@ -1,0 +1,22 @@
+<svg width="900" height="240" viewBox="0 0 900 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="240" rx="36" fill="#F6FBFA"/>
+  <g transform="translate(28 28)">
+    <rect width="184" height="184" rx="40" fill="url(#bg)"/>
+    <path d="M53 57C53 49.268 59.268 43 67 43H91C114.748 43 134 62.2518 134 86V98C134 121.748 114.748 141 91 141H77V162H53V57Z" fill="white"/>
+    <path d="M80 70H92C104.703 70 115 80.2975 115 93V93C115 105.703 104.703 116 92 116H80V70Z" fill="url(#inner)"/>
+    <path d="M132 69C139.18 69 145 74.8203 145 82V88H151C158.18 88 164 93.8203 164 101C164 108.18 158.18 114 151 114H145V120C145 127.18 139.18 133 132 133C124.82 133 119 127.18 119 120V114H113C105.82 114 100 108.18 100 101C100 93.8203 105.82 88 113 88H119V82C119 74.8203 124.82 69 132 69Z" fill="#7EF2D4"/>
+  </g>
+  <text x="246" y="102" fill="#12334B" font-size="76" font-family="Manrope, Arial, sans-serif" font-weight="800" letter-spacing="2">DDMed</text>
+  <text x="248" y="147" fill="#2E6074" font-size="27" font-family="Manrope, Arial, sans-serif" font-weight="700" letter-spacing="6">CLINICAL STUDIO</text>
+  <text x="248" y="186" fill="#5B7282" font-size="22" font-family="Source Sans 3, Arial, sans-serif" font-weight="600">Clinical workflows, interoperability and terminology operations</text>
+  <defs>
+    <linearGradient id="bg" x1="20" y1="16" x2="164" y2="164" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E5E6F"/>
+      <stop offset="1" stop-color="#133A63"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="80" y1="70" x2="123" y2="121" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A9FFF0"/>
+      <stop offset="1" stop-color="#6ED7C3"/>
+    </linearGradient>
+  </defs>
+</svg>

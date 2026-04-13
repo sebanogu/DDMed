@@ -729,7 +729,7 @@ export class MaturityMainComponent implements OnInit {
         pdf.addImage(contentDataURL, 'PNG', xPos, yPos, imgWidth, imgHeight);
 
         // FOOTNOTE: Add some text at the bottom
-        const footnote = 'Generated using the SNOMED International Maturity Assessment Tool';
+        const footnote = 'Generated using the DDMed Implementation Maturity Assessment Tool';
         pdf.setFontSize(10); // optional, make the footnote smaller
         pdf.text(
           footnote,

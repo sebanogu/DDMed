@@ -22,7 +22,7 @@ import { AuthService } from './auth/services/auth.service';
     standalone: false
 })
 export class AppComponent {
-  title = 'sct-implementation-demonstrator';
+  title = 'ddmed-clinical-studio';
   loadingModule = false;
   bindingsForExport: any[] = [];
   editions: any[] = [];

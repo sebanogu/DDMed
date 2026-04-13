@@ -1,13 +1,29 @@
 .mat-toolbar {
-    background-color: #434a55;
-    color: white; /* add this line to change the text color to white */
+    background:
+      linear-gradient(90deg, rgba(20, 75, 106, 0.98) 0%, rgba(15, 118, 110, 0.95) 100%);
+    color: white;
     font-size: 1.8rem;
     font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 30px rgba(20, 54, 77, 0.18);
 }
 
 button {
     font-weight: bold;
     font-size: medium;
+}
+
+.brand-link {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    margin-left: 14px;
+    line-height: 1.05;
 }
 
 .bar-button {
@@ -20,16 +36,13 @@ button {
 }
 
 #title {
-    margin-left: 15px;
-    font-size: 1.4rem;
+    font-size: 1.28rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
 }
 
 .example-spacer {
     flex: 1 1 auto;
-}
-
-a {
-    margin-left: 15px;
 }
 
 ::ng-deep.mat-mdc-menu-panel {
@@ -52,10 +65,15 @@ a {
 
 #short-title {
     display: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
 }
 
 #logo {
-    height: 4rem;
+    height: 3.1rem;
+    width: 3.1rem;
 }
 
 .menu-text {
@@ -71,12 +89,11 @@ a {
 
     #short-title {
         display: block;
-        margin-left: 15px;
-        font-size: 0.9rem;
     }
 
     #logo {
-        height: 3.5rem;
+        height: 2.75rem;
+        width: 2.75rem;
     }
 
     #info-button {

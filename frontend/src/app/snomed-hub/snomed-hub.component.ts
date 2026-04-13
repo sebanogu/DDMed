@@ -19,7 +19,7 @@ export class SnomedHubComponent implements AfterViewInit, OnInit {
   @ViewChildren('cardLabel', { read: ElementRef })
   cardLabels!: QueryList<ElementRef<HTMLElement>>;
 
-  searchBinding = { ecl: '*', title: 'Search a SNOMED CT concept or click on a collaboration box...' };
+  searchBinding = { ecl: '*', title: 'Search a concept or select an interop card to explore connected assets...' };
   selectedCode: any = null;
   selectedCodeTerm = "";
   searching = false;
@@ -373,19 +373,19 @@ export class SnomedHubComponent implements AfterViewInit, OnInit {
   getCalloutMessage(box: SnomedBox): string {
     switch (box.type) {
       case 'content':
-        return 'Part of project';
+        return 'Included here';
       case 'map':
         if (box.mapSources && box.mapSources.length > 0) {
           return 'Maps from ' + box.mapSources.slice(0, 2).join(', ') + (box.mapSources.length > 2 ? '...' : '');
         } else if (box.mapTargets && box.mapTargets.length > 0) {
           return 'Maps to ' + box.mapTargets.slice(0, 2).join(', ') + (box.mapTargets.length > 2 ? '...' : '');
         } else {
-          return 'No mapping available';
+          return 'No mapping found';
         }
       case 'extension':
-        return 'Part of extension';
+        return 'Included in extension';
       case 'refset':
-        return 'Member of Refset';
+        return 'Reference set member';
       default:
         return '';
     }

@@ -5,11 +5,26 @@
 @tailwind utilities;
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: "Source Sans 3", "Helvetica Neue", sans-serif;
+  color: var(--ddmed-ink);
+  background:
+    radial-gradient(circle at top right, rgba(126, 242, 212, 0.18), transparent 22%),
+    linear-gradient(180deg, #f4fbfa 0%, #edf4f7 100%);
+}
 
 :root {
   --app-top-toolbar-height: 64px;
   --app-top-toolbar-height-mobile: 56px;
+  --ddmed-ink: #183348;
+  --ddmed-muted: #5b7282;
+  --ddmed-surface: #ffffff;
+  --ddmed-surface-alt: #f2f8f7;
+  --ddmed-line: #d4e3e4;
+  --ddmed-primary: #0f766e;
+  --ddmed-primary-deep: #144b6a;
+  --ddmed-accent: #7ef2d4;
 }
 
 .material-symbols-outlined {
@@ -39,10 +54,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 
     a {
-      @apply text-blue-500;
-      @apply hover:text-blue-700;
+      color: var(--ddmed-primary-deep);
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--ddmed-primary);
     }
   }
+
+.mat-mdc-card-title,
+.mat-toolbar,
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+}
 
 /* Material Snackbar styles */
 ::ng-deep .warning-snackbar {
